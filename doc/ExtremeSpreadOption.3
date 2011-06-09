@@ -1,0 +1,32 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm ExtremeSpreadOption()
+.Nd ExtremeSpreadOption
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double ExtremeSpreadOption"
+.Fa "int TypeFlag"
+.Fa "double S"
+.Fa "double SMin"
+.Fa "double SMax"
+.Fa "double t1"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Sh DESCRIPTION
+We have four different types of extreme spread options, the regular put/call
+as well as extreme or "reverse extreme". We use some defined constants for this.
+Use one of them as typeflag.
+
+#define ESO_CALL			1
+#define ESO_PUT				2
+#define ESO_REVERSE_CALL	3
+#define ESO_REVERSE_PUT		4
+
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

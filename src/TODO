@@ -1,0 +1,28 @@
+Clean up typeflag in 
+	BinaryBarrier()
+	BarrierBinominal()
+		Done.
+	ExchangeExchangeOption()
+	ExtremeSpreadOption()
+		TypeFlag has just three values, 1, 2 and 3.
+	Done. LookBarrier()
+	OptionsOnTheMaxMin()
+	PartialTimeBarrier()
+		Hmm, this function supports 10 different TypeFlags, but the first if-test eliminates all but two
+		when it decides the proper value of the eta variable. Recheck with the book.
+
+	Done. ThreeDimensionalBinominal(), see PayoffFunction() for a description of typeflag
+	TwoAssetCashOrNothing()
+
+Clean up id in CriticalPart[23]()
+Remove redundant calls to exp() in ExchangeExchangeOption()
+Add asserts to all returned results
+
+Inline ForwardStartOption()
+
+Clean up ReturnFlag in ImpliedTrinominalTree
+
+BUG?: Check out the use of the y2 variable in the original ThreeDimensionalBinominal() formula.
+y2 is not used in the first for() loop in my version...
+
+BUG?: Is LookBarrier().trho assigned a value twice in the book or is that my bug?

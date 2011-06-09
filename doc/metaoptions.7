@@ -1,0 +1,53 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm metaoptions
+.Nd A collection of option formulas implemented in C
+
+
+
+/**
+ * Some constants we use a lot.
+ * The M_E and friends from math.h is not a part of the ANSI C standard,
+ * so we add them here instead.
+ * e, pi and sqrt(2*pi);
+ * A common calculation is (1/sqrt2pi) *e, which equals e/sqr2pi.
+ */
+.Ss Constants
+.Bd -literal
+static const double e = 2.7182818284590452354;
+static const double pi = 3.14159265358979323846;	
+static const double sqrt2pi = 2.50662827463100024161;
+static const double e_div_sqrt2pi = 1.08443755141922748564;
+static const double one_div_sqrt2pi = 0.39894228040143270286;
+.Be
+
+/*
+ * pow() is slow and can for our needs easily be replaced with a
+ * custom function, pow2(). pow(x, 2) is a very common operation 
+ * and the utility function pow2() below is > 15 times faster than pow(x, 2),
+ * as long as the gcc flag -ffast-math isn't used. If that flag is used,
+ * then pow() and pow2() has equal performance.
+ */
+
+/*
+ * Error checking macros, used to aid users of the library.
+ */
+#define assert_valid_strike(X)			assert(isfinite(X) && X > 0.0)
+#define assert_valid_price(S)			assert(isfinite(S) && S > 0.0)
+#define assert_valid_time(T)			assert(isfinite(T) && T > 0.0) /* Else we end up with lots of divide by zero */
+#define assert_valid_interest_rate(r)	assert(isfinite(r) && r >= 0.0);			/* Interest rate >= 0.0 */
+#define assert_valid_cost_of_carry(b)	assert(isfinite(b) && b >= 0.0);			/* cost of carry >= 0.0 */
+#define assert_valid_volatility(v)		assert(isfinite(v) && v > 0.0 && v <= 100.0);
+
+/*
+ * Parameter rules, naming conventions:
+ * X - Strike
+ * S - Stock price right now
+ * T - Time to expiry as fraction of year. 6 months == 0.5, 9 months == 0.75
+ * r - Risk free interest rate. 10% == 0.10
+ * b - Cost of Carry. 10% == 0.10
+ * v - Volatility, 30% == 0.30
+ */
+

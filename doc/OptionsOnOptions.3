@@ -1,0 +1,31 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm OptionsOnOptions()
+.Nd OptionsOnOptions
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fa "double OptionsOnOptions"
+.Fa "int typeflag"
+.Fa "double S"
+.Fa "double X1"
+.Fa "double X2"
+.Fa "double t1"
+.Fa "double T2"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Sh DESCRIPTION
+We can have a couple of combinations for OoO, 
+and use an integer to define the combos. No enums since
+that makes it harder to call the function from other languages.
+
+#define OOO_PUT_ON_CALL		1
+#define OOO_CALL_ON_CALL	2
+#define OOO_PUT_ON_PUT 		3
+#define OOO_CALL_ON_PUT		4
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

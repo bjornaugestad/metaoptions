@@ -1,0 +1,34 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm ConvertibleBond()
+.Nd ConvertibleBond
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double ConvertibleBond"
+.Fa "int EuropeanOption"
+.Fa "double S"
+.Fa "double X"
+.Fa "double T2"
+.Fa "double t1"
+.Fa "double r"
+.Fa "double k"
+.Fa "double q"
+.Fa "double v"
+.Fa "double F"
+.Fa "double Coupon"
+.Fa "int n"
+.Fc
+.Sh DESCRIPTION
+Convertible bonds in binomial trees.
+T2: Time to maturity 
+t1: Time to to first conversion date, only used when the option is American 
+k   Issuer's credit spread above risk-free return(similar Treasuries). 
+q   Stock dividend yield 
+v:  Stock volatility 
+n:  Number of time-steps in the tree 
+F   Bond face value 
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

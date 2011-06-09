@@ -1,0 +1,36 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm PartialTimeBarrier()
+.Nd PartialTimeBarrier
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double PartialTimeBarrier"
+.Fa "const char* TypeFlag"
+.Fa "double S"
+.Fa "double X"
+.Fa "double H"
+.Fa "double t1"
+.Fa "double T2"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Sh DESCRIPTION
+Partial time barrier accepts the following option types:
+NOTE: See the TODO file ASAP, as in Before you do anything else.
+
+#define PTB_CALL_UP_OUT_A		1
+#define PTB_CALL_DOWN_OUT_A		2
+#define PTB_CALL_DOWN_OUT_B1	3
+#define PTB_CALL_DOWN_OUT_B2	4
+#define PTB_CALL_UP_OUT_B2		5
+#define PTB_CALL_OUT_B1			6
+#define PTB_PUT_DOWN_OUT_A		7
+#define PTB_PUT_UP_OUT_A		8
+#define PTB_PUT_OUT_B1			9
+#define PTB_PUT_DOWN_OUT_B2		10
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

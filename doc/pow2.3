@@ -1,0 +1,20 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm pow2()
+.Nd pow2
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "static inline double pow2"
+.Fa "double n"
+.Fc
+.Sh DESCRIPTION
+pow() is slow and can for our needs easily be replaced with a
+custom function, pow2(). pow(x, 2) is a very common operation 
+and the utility function pow2() below is > 15 times faster than pow(x, 2),
+as long as the gcc flag -ffast-math isn't used. If that flag is used,
+then pow() and pow2() has equal performance.
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

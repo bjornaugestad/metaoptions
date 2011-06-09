@@ -1,0 +1,50 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm TrinominalTree()
+.Nd TrinominalTree
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double TrinomialTree"
+.Fa "int EuropeanOption"
+.Fa "int fCall"
+.Fa "double S"
+.Fa "double X"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fa "double n"
+.Fc
+.Sh DESCRIPTION
+.Ss Arguments
+.Bl -item
+.It
+.Fa EuropeanOption
+.It
+.Fa fCall
+.It
+.Fa S
+is the price of the underlying security. 
+.It
+.Fa X
+is option strike price. 
+.It
+.Fa T
+is time to expiry as fraction of year. 6 months == 0.5, 9 months == 0.75
+.It
+.Fa r
+is the risk free interest rate. 10% == 0.10
+.It
+.Fa b
+Cost of Carry. 10% == 0.10
+.It
+.Fa v
+Volatility, 30% == 0.30
+.It
+.Fa n
+.El
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

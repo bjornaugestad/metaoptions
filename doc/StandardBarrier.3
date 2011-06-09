@@ -1,0 +1,85 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm StandardBarrier()
+.Nd StandardBarrier
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fa "double StandardBarrier"
+.Fa "int typeflag"
+.Fa "double S"
+.Fa "double X"
+.Fa "double H"
+.Fa "double K"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Fo "double SoftBarrier"
+.Fa "int typeflag"
+.Fa "double S"
+.Fa "double X"
+.Fa "double L"
+.Fa "double U"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Fo "double PartialTimeTwoAssetBarrier"
+.Fa "int typeflag"
+.Fa "double S1"
+.Fa "double S2"
+.Fa "double X"
+.Fa "double H"
+.Fa "double t1"
+.Fa "double T2"
+.Fa "double r"
+.Fa "double b1"
+.Fa "double b2"
+.Fa "double v1"
+.Fa "double v2"
+.Fa "double rho"
+.Fc
+.Fo "double LookBarrier"
+.Fa "int type"
+.Fa "double S"
+.Fa "double X"
+.Fa "double H"
+.Fa "double t1"
+.Fa "double T2"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Fo "double BarrierBinomial"
+.Fa "int EuropeanOption"
+.Fa "int type"
+.Fa "double S"
+.Fa "double X"
+.Fa "double H"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fa "int n"
+.Fc
+.Sh DESCRIPTION
+/*
+* Option types for StandardBarrier(), LookBarrier(), PartialTimeTwoAssetBarrier() and SoftBarrier() .
+* LookBarrier() accepts SB_CALL_UP_OUT, SB_PUT_DOWN_OUT, SB_CALL_UP_IN and SB_PUT_DOWN_IN
+* BarrierBinominal() uses: SB_CALL_UP_OUT, SB_CALL_DOWN_OUT, SB_PUT_UP_OUT, SB_PUT_DOWN_OUT
+*/
+#define SB_CALL_DOWN_IN		1
+#define SB_CALL_DOWN_OUT	2
+#define SB_CALL_UP_IN		3
+#define SB_CALL_UP_OUT		4
+#define SB_PUT_DOWN_IN		5
+#define SB_PUT_DOWN_OUT		6
+#define SB_PUT_UP_IN		7
+#define SB_PUT_UP_OUT		8
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

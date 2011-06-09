@@ -1,0 +1,23 @@
+Sat Mar 10 05:51:33 CET 2007
+-- Fixed ExtremeSpreadOption()
+-- Moving back to C89 to be able to use metaoptions from Excel, postgres and more
+-- Splitting the check_options.c program into a more traditional pattern.
+Each function has its own test part within its implementation file.
+
+Mon Nov 21 07:22:27 CET 2005 Changes between 0.0.1 and 0.0.2
+-- Once again more C99 and less C89.
+-- More asserts, even for inline functions
+
+Tue Nov 22 09:11:41 CET 2005
+-- Cleaned up ThreeDimensionalBinominal(). This function has a couple of issues which
+probably should be reported to Espen Haug.
+	- PayoffFunction() calls dmax() more often than it has to.
+	- the y2 variable is assigned a computed value, but not used. Why is that?
+
+Thu Dec 22 12:13:18 CET 2005
+--
+Some name changes before I start creating man pages. I want the functions to be more
+C/UNIX like
+Old			New
+Merton73	merton73
+

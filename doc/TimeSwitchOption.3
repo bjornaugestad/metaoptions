@@ -1,0 +1,53 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm TimeSwitchOption()
+.Nd TimeSwitchOption
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double TimeSwitchOption"
+.Fa "int fCall"
+.Fa "double S"
+.Fa "double X"
+.Fa "double a"
+.Fa "double T"
+.Fa "int m"
+.Fa "double dt"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Sh DESCRIPTION
+.Ss Arguments
+.Bl -item
+.It
+.Fa fCall
+.It
+.Fa S
+is the price of the underlying security. 
+.It
+.Fa X
+is option strike price. 
+.It
+.Fa a
+.It
+.Fa T
+is time to expiry as fraction of year. 6 months == 0.5, 9 months == 0.75
+.It
+.Fa m
+.It
+.Fa dt
+.It
+.Fa r
+is the risk free interest rate. 10% == 0.10
+.It
+.Fa b
+Cost of Carry. 10% == 0.10
+.It
+.Fa v
+Volatility, 30% == 0.30
+.El
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

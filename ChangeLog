@@ -1,0 +1,6 @@
+Fri Mar 16 12:28:31 
+Added GarmanKohlhagen() 
+Added put_check to merton73()
+Added more tests to black76(), now we have both call&put checks
+
+

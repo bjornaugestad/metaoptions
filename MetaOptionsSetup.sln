@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "MetaOptionsSetup.vdproj", "{10FEEA6E-BA47-49B5-9431-A29A0CA196F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10FEEA6E-BA47-49B5-9431-A29A0CA196F4}.Debug|Default.ActiveCfg = Debug
+		{10FEEA6E-BA47-49B5-9431-A29A0CA196F4}.Debug|Default.Build.0 = Debug
+		{10FEEA6E-BA47-49B5-9431-A29A0CA196F4}.Release|Default.ActiveCfg = Release
+		{10FEEA6E-BA47-49B5-9431-A29A0CA196F4}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

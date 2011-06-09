@@ -1,0 +1,46 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm ExtendibleWriter()
+.Nd ExtendibleWriter
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double ExtendibleWriter"
+.Fa "int fCall"
+.Fa "double S"
+.Fa "double X1"
+.Fa "double X2"
+.Fa "double t1"
+.Fa "double T2"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+.Sh DESCRIPTION
+.Ss Arguments
+.Bl -item
+.It
+.Fa S
+is the price of the underlying security. 
+.It
+.Fa X1
+.It
+.Fa X2
+.It
+.Fa t1
+.It
+.Fa T2
+.It
+.Fa r
+is the risk free interest rate. 10% == 0.10
+.It
+.Fa b
+Cost of Carry. 10% == 0.10
+.It
+.Fa v
+Volatility, 30% == 0.30
+.El
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

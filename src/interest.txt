@@ -1,0 +1,24 @@
+/*  Black-76 European swap option */
+extern double Swapoption(
+	int fCall,
+	double t1,
+	double m,
+	double F,
+	double X,
+	double T,
+	double r,
+	double v) 
+{
+	double d1, d2, result;
+ 
+    d1 = (log(F / X) + pow2(v) / 2 * T) / (v * sqrt(T));
+    d2 = d1 - v * sqrt(T);
+
+    if(fCall)  /* Payer swaption */
+        result = ((1 - 1 / pow((1 + F / m), (t1 * m))) / F) * exp(-r * T) * (F * cnd(d1) - X * cnd(d2));
+    else /* Receiver swaption */
+        result = ((1 - 1 / pow((1 + F / m), (t1 * m))) / F) * exp(-r * T) * (X * cnd(-d2) - F * cnd(-d1));
+
+	return result;
+}
+

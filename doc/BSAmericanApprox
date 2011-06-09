@@ -1,0 +1,11 @@
+/* The Bjerksund and Stensland (1993) American approximation */
+.Fo "double BSAmericanApprox"
+.Fa "int fCall"
+.Fa "double S"
+.Fa "double X"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fc
+

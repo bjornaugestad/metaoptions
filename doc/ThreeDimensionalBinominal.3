@@ -1,0 +1,45 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm ThreeDimensionalBinominal()
+.Nd ThreeDimensionalBinominal
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double ThreeDimensionalBinomial"
+.Fa "int type"
+.Fa "int EuropeanOption"
+.Fa "int fCall"
+.Fa "double S1"
+.Fa "double S2"
+.Fa "double Q1"
+.Fa "double Q2"
+.Fa "double X1"
+.Fa "double X2"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b1"
+.Fa "double b2"
+.Fa "double v1"
+.Fa "double v2"
+.Fa "double rho"
+.Fa "int n"
+.Fc
+.Sh DESCRIPTION
+/*
+* The TypeFlag can have 7 different values, from 1..7.
+* The TDB_ prefix is short for ThreeDimensionalBinominal_
+* As usual, we don't use an enum to support more (calling) languages.
+*/
+#define TDB_SPREAD_OPTION 				1
+#define TDB_OPTION_ON_THE_MAX			2 /* between two assets */
+#define TDB_OPTION_ON_THE_MIN			3 /* between two assets */
+#define TDB_DUAL_STRIKE_OPTION			4
+#define TDB_REVERSE_DUAL_STRIKE_OPTION	5
+#define TDB_PORTFOLIO_OPTION			6
+#define TDB_EXCHANGE_OPTION				7
+#define TDB_OPTIONTYPE_MIN				1
+#define TDB_OPTIONTYPE_MAX				7
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com

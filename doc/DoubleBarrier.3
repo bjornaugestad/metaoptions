@@ -1,0 +1,59 @@
+.Dd Nov 25, 2005
+.Os ISO C99
+.Dt META_OPTIONS 3
+.Sh NAME
+.Nm DoubleBarrier()
+.Nd DoubleBarrier
+.Sh SYNOPSIS
+.Fd #include <metaoptions.h>
+.Fo "double DoubleBarrier"
+.Fa "int TypeFlag"
+.Fa "double S"
+.Fa "double X"
+.Fa "double L"
+.Fa "double U"
+.Fa "double T"
+.Fa "double r"
+.Fa "double b"
+.Fa "double v"
+.Fa "double delta1"
+.Fa "double delta2"
+.Fc
+.Sh DESCRIPTION
+/* We have 4 types of DoubleBarrier options, defined here */
+#define DB_PUT_IN		1
+#define DB_PUT_OUT		2
+#define DB_CALL_IN		3
+#define DB_CALL_OUT		4
+.Ss Arguments
+.Bl -item
+.It
+.Fa S
+is the price of the underlying security. 
+.It
+.Fa X
+is option strike price. 
+.It
+.Fa L
+.It
+.Fa U
+.It
+.Fa T
+is time to expiry as fraction of year. 6 months == 0.5, 9 months == 0.75
+.It
+.Fa r
+is the risk free interest rate. 10% == 0.10
+.It
+.Fa b
+Cost of Carry. 10% == 0.10
+.It
+.Fa v
+Volatility, 30% == 0.30
+.It
+.Fa delta1
+.It
+.Fa delta2
+.El
+.Sh RETURN VALUE
+.Sh AUTHOR
+.An B. Augestad, bjorn.augestad@gmail.com
