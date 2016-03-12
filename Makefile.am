@@ -466,7 +466,7 @@ black76_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DBLAC
 black76_check_LDADD=-lm
 black76_check_SOURCES=src/black76.c src/cnd.c
 
-blackscholes_check_CFLAGS=-Wshadow $(FM$(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DBLACKSCHOLES_CHECK
+blackscholes_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DBLACKSCHOLES_CHECK
 blackscholes_check_LDADD=-lm
 blackscholes_check_SOURCES=src/blackscholes.c src/cnd.c
 
