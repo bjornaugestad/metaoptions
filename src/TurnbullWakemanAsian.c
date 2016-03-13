@@ -77,7 +77,7 @@ double TurnbullWakemanAsian(
 void check_TurnbullWakemanAsian(void)
 {
 	double S = 90.0, SA = 88, X = 95.0, T = 0.5, T2 = 0.25, tau = 0.0, r = 0.07, b = 0.02, v = 0.25;
-	double result, fasit = 5.8482;
+	double result, fasit = 5.847820;
 
 	result = TurnbullWakemanAsian(0, S, SA, X, T, T2, tau, r, b, v);
 	assert_equal(result, fasit);

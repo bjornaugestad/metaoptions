@@ -87,7 +87,7 @@ extern double french_call(double S, double X, double T, double t1, double r, dou
 void check_french(void)
 {
 	double S = 70, X = 75.0, T = 0.4, t1 = 0.4111, r = 0.08, b = 0.08, v = 0.30;
-	double fasit = 6.8836;
+	double fasit = 6.88379158;
 
 	double result = french(0, S, X, T, t1, r, b, v);
 	assert_equal(result, fasit);
