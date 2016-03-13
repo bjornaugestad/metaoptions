@@ -1,0 +1,31 @@
+Sun Mar 13 12:42:56 CET 2016
+We want to learn more about Assembly programming and Vector programming
+on both ARM and AMD64. Let's see if we can use blacksholes() as a test
+case.
+
+Verification is ultra-important. Therefore, we create a test set
+which will be used when developing the many versions of the original
+formula. We assume that the original source, copied from ../src, is
+correct. 
+
+About our test data: 
+- We want a lot of test data, so we can utilize vectorization
+  and even GPU resources.
+- We keep the separation between puts and calls. It is such a natural
+  optimization anyway, so there's no need to keep a big if in all versions.
+
+- We vary T from 1/12 to 12/12.
+- We vary S(price) from 10 to 100, step 10
+- We keep X at 50
+- We vary interest rate from 1.0 to 4.0, step 0.1
+- We vary volatility from 10 to 100, step 10.
+
+This will result in a lot of test data 12*10*40*10 (48000) data sets.
+We store this in an array. That array is in a separate file and includes
+the 'correct' answer. The array can then be #include'd in source files
+and used for test purposes. Either that, or we'll keep our main() in
+the array's file and just link with different implementations of 
+blackscholes_call():
+
+
+
