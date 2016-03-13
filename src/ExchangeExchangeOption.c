@@ -91,7 +91,6 @@ static double CriticalPrice(
     double Ii = I1;
     double yi = CriticalPart3(id, Ii, t1, T2, v);
     double di = CriticalPart2(id, Ii, t1, T2, v);
-    const double epsilon = 0.00001;
     while(fabs(yi - q) > epsilon) {
         Ii = Ii - (yi - q) / di;
         yi = CriticalPart3(id, Ii, t1, T2, v);

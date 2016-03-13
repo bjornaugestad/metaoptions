@@ -34,7 +34,7 @@ static double CriticalValueOptionsOnOptions(
 	double b,
 	double v) 
 {
-	double Si, ci, di, epsilon = 0.000001;
+	double Si, ci, di;
 
 	assert_valid_strike(X1);
 	assert_valid_strike(X2);

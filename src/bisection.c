@@ -43,7 +43,6 @@ extern int bisection(
 {
 	double vLow = VOLATILITY_MIN;
 	double vHigh = VOLATILITY_MAX;
-	const double epsilon = 0.00000001;
 	double vi, val, cLow, cHigh;
 
 	assert_valid_price(S);

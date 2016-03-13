@@ -33,7 +33,6 @@ extern double BAWbisection(
 {
 	double vLow = 0.1;
 	double vHigh = 1.0;
-	const double epsilon = 0.000001;
 	double vi;
 
 	assert_valid_price(S);

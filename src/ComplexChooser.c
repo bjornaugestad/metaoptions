@@ -35,7 +35,6 @@ static double CriticalValueChooser(
 	double v) 
 {
 	double Sv, ci, Pi, dc, dp, yi, di;
-    const double epsilon = 0.001;
 
 	assert_valid_price(S);
 	assert_valid_time(T);

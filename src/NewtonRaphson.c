@@ -30,7 +30,6 @@
  * 385.000		Removing the algo from NewtonRaphson(), we don't need three versions of it...
  */
 
-static const double epsilon = 0.00000000001;
 int NewtonRaphson(int fCall, double S, double X, double T, double r, double cm, double *piv)
 {
 	assert_valid_price(S);

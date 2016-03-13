@@ -27,7 +27,6 @@ extern double BSbisection(int fCall, double S, double X, double T, double r, dou
 
 	double vLow = VOLATILITY_MIN;
 	double vHigh = VOLATILITY_MAX, cLow, cHigh;
-	double epsilon = 0.000001;
 
 	double val, diff, vi = 0.0;
 	for(;;) {
@@ -72,6 +71,7 @@ void check_bsbisection(void)
 	computed = BSbisection(fCall, S, X, T, r, b, price);
 	assert_equal(computed, facit);
 }
+
 int main(void)
 {
 	check_bsbisection();

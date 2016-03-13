@@ -1,6 +1,6 @@
-FM=-ffast-math
+#FM=-ffast-math
 
-AM_CFLAGS=-Winline -Wshadow $(FM) -O3 -DNDEBUG -pthread -std=c99
+AM_CFLAGS=-Winline -Wshadow $(FM) -O2 -DNDEBUG -pthread -std=c99
 lib_LIBRARIES=libmetaoptions.a 
 EXTRA_DIST=$(man_MANS) src/TESTSUITE.README 
 TESTS=check_options\

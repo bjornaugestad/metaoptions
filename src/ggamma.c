@@ -45,7 +45,7 @@ void check_gamma(void)
 {
 	double S = 55.0, X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
 
-	assert_equal(gamma(S, X, T, r, b, v), 0.0278);
+	assert_equal(Gamma(S, X, T, r, b, v), 0.0278);
 }
 
 int main(void)

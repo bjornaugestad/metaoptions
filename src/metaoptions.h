@@ -32,11 +32,11 @@
 
 #define assert_equal(a, b)\
 {\
-	double x = fabs(a - b);\
+	double x = fabs((a) - (b));\
 	double maxdiff = 0.0001;\
 	if(x > maxdiff) {\
 		fprintf(stderr, "%s():%s(%d): assert_equal failed for values %.10g and %.10g\n",\
-		__func__, __FILE__, __LINE__, a, b);\
+		__func__, __FILE__, __LINE__, (a), (b));\
 		abort();\
 	}\
 }
@@ -102,6 +102,7 @@ static const double pi = 3.14159265358979323846;
 static const double sqrt2pi = 2.50662827463100024161;
 static const double e_div_sqrt2pi = 1.08443755141922748564;
 static const double one_div_sqrt2pi = 0.39894228040143270286;
+static const double epsilon = 0.0000000000001;
 
 #if 0
 static inline double pow2    (double n) { return n * n; }

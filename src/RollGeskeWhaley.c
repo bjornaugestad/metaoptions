@@ -34,7 +34,6 @@ double RollGeskeWhaley(
 {
 	double Sx, result;
     const double infinity = 100000000.0;
-    const double epsilon = 0.00001;
 
 	double ci, HighS, LowS, I;
 	double vst1, vst2, a1, a2, b1, b2;
