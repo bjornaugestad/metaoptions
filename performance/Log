@@ -1,0 +1,3 @@
+Sun Mar 13 14:29:16 CET 2016
+cnd(): Pre-computing K * K seems to reduce cycle count from 1,24 bill to 1,17 bill for 10mill calls.
+

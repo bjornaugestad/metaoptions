@@ -13,14 +13,15 @@ extern double cnd(double x)
 
 	const double L = fabs(x);
 	const double K = 1.0 / (1.0 + (0.2316419 * L));
+    const double KK = K * K;
 	const double a12345k 
 		= (a1 * K)
-		+ (a2 * K * K) 
-		+ (a3 * K * K * K) 
-		+ (a4 * K * K * K * K) 
-		+ (a5 * K * K * K * K * K); 
+		+ (a2 * KK) 
+		+ (a3 * KK * K) 
+		+ (a4 * KK * KK) 
+		+ (a5 * KK * KK * K); 
 
-	double result = 1.0 - one_div_sqrt2pi * exp(-pow(L, 2.0) / 2.0) * a12345k;
+	double result = 1.0 - one_div_sqrt2pi * exp(-(L * L) / 2.0) * a12345k;
 		
 	if(x < 0.0) 
 		result = 1.0 - result;
