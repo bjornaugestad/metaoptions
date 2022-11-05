@@ -130,7 +130,7 @@ double cbnd(double a, double b, double Rho)
     else if( (a * b * Rho) > 0.0) {
         double rho1, rho2, Delta;
         const double sp2a = sqrt(pow2(a) - (Rho * 2.0 * a * b) + pow2(b));
-#if 0
+#if 1
         /*assert(is_sane(sp2a));*/
         if(!is_sane(sp2a) || sp2a == 0.0) {
             fprintf(stderr, "This shouldn't happen :-(\n");
@@ -145,7 +145,7 @@ abort();
 #endif
 
         rho1 = (Rho * a - b) * sign(a) / sp2a;
-#if 0
+#if 1
         if(!is_sane(rho1)) {
             fprintf(stderr, "Rho==%g a == %g b == %g sign(a) == %g sp2a==%g\n", Rho, a, b, sign(a), sp2a);
         }
