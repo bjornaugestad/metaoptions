@@ -33,41 +33,41 @@
 
 /* Writer extendible options */
 double ExtendibleWriter(
-	int fCall,
-	double S,
-	double X1,
-	double X2,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v) 
+    int fCall,
+    double S,
+    double X1,
+    double X2,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v) 
 {
-	const double vv = v * v;
+    const double vv = v * v;
 
     const double Rho = sqrt(t1 / T2);
     const double z1 = (log(S / X2) + (b + vv / 2.0) * T2) / (v * sqrt(T2));
     const double z2 = (log(S / X1) + (b + vv / 2.0) * t1) / (v * sqrt(t1));
 
-	const double vt1 = sqrt(vv * t1);
-	const double vT2 = sqrt(vv * T2);
-	const double res1 = gbs(fCall, S, X1, t1, r, b, v);
+    const double vt1 = sqrt(vv * t1);
+    const double vT2 = sqrt(vv * T2);
+    const double res1 = gbs(fCall, S, X1, t1, r, b, v);
 
-	double result;
+    double result;
     if (fCall) {
         result = res1
-			+ S * exp((b - r) * T2) * cbnd(z1, -z2, -Rho) 
-			- X2 * exp(-r * T2) 
-			* cbnd(z1 - vT2, -z2 + vt1, -Rho);
+            + S * exp((b - r) * T2) * cbnd(z1, -z2, -Rho) 
+            - X2 * exp(-r * T2) 
+            * cbnd(z1 - vT2, -z2 + vt1, -Rho);
     }
-	else {
+    else {
         result 
-			= res1
-			+ X2 * exp(-r * T2) * cbnd(-z1 + vT2, z2 - vt1, -Rho)
-			- S * exp((b - r) * T2) * cbnd(-z1, z2, -Rho);
+            = res1
+            + X2 * exp(-r * T2) * cbnd(-z1 + vT2, z2 - vt1, -Rho)
+            - S * exp((b - r) * T2) * cbnd(-z1, z2, -Rho);
     }
 
-	return result;
+    return result;
 }
 
 #ifdef EXTENDIBLEWRITER_CHECK
@@ -75,18 +75,18 @@ double ExtendibleWriter(
 /* Page 50-51 */
 void check_ExtendibleWriter(void)
 {
-	double S = 80.0, X1 = 90.0, X2= 82.0, t1 = 0.5, T2 = 0.75, r = 0.10, b = 0.10, v = 0.30;
-	double result, fasit = 6.8238;
+    double S = 80.0, X1 = 90.0, X2= 82.0, t1 = 0.5, T2 = 0.75, r = 0.10, b = 0.10, v = 0.30;
+    double result, fasit = 6.8238;
 
-	result = ExtendibleWriter(1, S, X1, X2, t1, T2, r, b, v);
-	assert_equal(result, fasit);
+    result = ExtendibleWriter(1, S, X1, X2, t1, T2, r, b, v);
+    assert_equal(result, fasit);
 }
 
 int main(void)
 {
-	check_ExtendibleWriter();
-	printf("Mangler data for puts\n");
-	return 0;
+    check_ExtendibleWriter();
+    printf("Mangler data for puts\n");
+    return 0;
 }
 #endif
 

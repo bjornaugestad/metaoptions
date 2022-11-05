@@ -23,43 +23,43 @@
 
 /* Vasicek: value zero coupon bond */
 extern double VasicekBondPrice(
-	double t1,
-	double T,
-	double r,
-	double Theta,
-	double kappa,
-	double v) 
+    double t1,
+    double T,
+    double r,
+    double Theta,
+    double kappa,
+    double v) 
 {
-	double BtT, AtT, PtT;
+    double BtT, AtT, PtT;
 
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
     BtT = (1 - exp(-kappa * (T - t1))) / kappa;
     AtT = exp(
-		(BtT - T + t1) * (pow2(kappa) * Theta - pow2(v) / 2.0) / pow2(kappa) 
-		- pow2(v) * pow2(BtT) / (4.0 * kappa)
-	);
+        (BtT - T + t1) * (pow2(kappa) * Theta - pow2(v) / 2.0) / pow2(kappa) 
+        - pow2(v) * pow2(BtT) / (4.0 * kappa)
+    );
 
     PtT = AtT * exp(-BtT * r);
 
-	assert(is_sane(PtT));
-	return PtT;
+    assert(is_sane(PtT));
+    return PtT;
 }
 
 
 #ifdef VASICEKBONDPRICE_CHECK
 void check_VasicekBondPrice(void)
 {
-	printf("	%s(): Not implemented\n", __func__);
+    printf("	%s(): Not implemented\n", __func__);
 }
 
 int main(void)
 {
 
-	check_VasicekBondPrice();
-	return 77;
+    check_VasicekBondPrice();
+    return 77;
 }
 #endif
 

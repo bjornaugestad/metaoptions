@@ -26,22 +26,22 @@
 
 /* Calculation of critical price options on options */
 static double CriticalValueOptionsOnOptions(
-	int fCall,
-	double X1,
-	double X2,
-	double T, 
-	double r,
-	double b,
-	double v) 
+    int fCall,
+    double X1,
+    double X2,
+    double T, 
+    double r,
+    double b,
+    double v) 
 {
-	double Si, ci, di;
+    double Si, ci, di;
 
-	assert_valid_strike(X1);
-	assert_valid_strike(X2);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_strike(X1);
+    assert_valid_strike(X2);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
     Si = X1;
     ci = gbs(fCall, Si, X1, T, r, b, v);
@@ -59,35 +59,35 @@ static double CriticalValueOptionsOnOptions(
 
 /* Options on options */
 double OptionsOnOptions(
-	int typeflag,
-	double S,
-	double X1,
-	double X2,
-	double t1, 
-	double T2,
-	double r,
-	double b,
-	double v) 
+    int typeflag,
+    double S,
+    double X1,
+    double X2,
+    double t1, 
+    double T2,
+    double r,
+    double b,
+    double v) 
 {
-	double result, bv2, vst1, vsT2, I, Rho, _y1, y2, z1, z2;
-	int fCall;
+    double result, bv2, vst1, vsT2, I, Rho, _y1, y2, z1, z2;
+    int fCall;
 
-	assert_valid_price(S);
-	assert_valid_strike(X1);
-	assert_valid_strike(X2);
-	assert_valid_time(t1);
-	assert_valid_time(T2);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X1);
+    assert_valid_strike(X2);
+    assert_valid_time(t1);
+    assert_valid_time(T2);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	bv2 = b + pow2(v) / 2.0;
-	vst1 = v * sqrt(t1);
-	vsT2 = v * sqrt(T2);
+    bv2 = b + pow2(v) / 2.0;
+    vst1 = v * sqrt(t1);
+    vsT2 = v * sqrt(T2);
 
-	assert(typeflag == OOO_CALL_ON_CALL || typeflag == OOO_CALL_ON_PUT || typeflag == OOO_PUT_ON_CALL || typeflag == OOO_PUT_ON_PUT);
+    assert(typeflag == OOO_CALL_ON_CALL || typeflag == OOO_CALL_ON_PUT || typeflag == OOO_PUT_ON_CALL || typeflag == OOO_PUT_ON_PUT);
     
-	if(typeflag == OOO_CALL_ON_CALL || typeflag == OOO_PUT_ON_CALL)
+    if(typeflag == OOO_CALL_ON_CALL || typeflag == OOO_PUT_ON_CALL)
         fCall = 1;
     else
         fCall = 0;
@@ -100,53 +100,53 @@ double OptionsOnOptions(
     z1 = (log(S / X1) + bv2 * T2) / vsT2;
     z2 = z1 - vsT2;
 
-	if(typeflag == OOO_CALL_ON_CALL) {
+    if(typeflag == OOO_CALL_ON_CALL) {
         result 
-			=  S * exp((b - r) * T2) * cbnd(z1, _y1, Rho) 
-			- X1 * exp(-r * T2)      * cbnd(z2, y2, Rho) 
-			- X2 * exp(-r * t1)      * cnd(y2);
+            =  S * exp((b - r) * T2) * cbnd(z1, _y1, Rho) 
+            - X1 * exp(-r * T2)      * cbnd(z2, y2, Rho) 
+            - X2 * exp(-r * t1)      * cnd(y2);
     }
-	else if(typeflag == OOO_PUT_ON_CALL) {
+    else if(typeflag == OOO_PUT_ON_CALL) {
         result 
-			= X1 * exp(-r * T2)      * cbnd(z2, -y2, -Rho) 
-			-  S * exp((b - r) * T2) * cbnd(z1, -_y1, -Rho) 
-			+ X2 * exp(-r * t1)      * cnd(-y2);
+            = X1 * exp(-r * T2)      * cbnd(z2, -y2, -Rho) 
+            -  S * exp((b - r) * T2) * cbnd(z1, -_y1, -Rho) 
+            + X2 * exp(-r * t1)      * cnd(-y2);
     }
-	else if(typeflag == OOO_CALL_ON_PUT) {
+    else if(typeflag == OOO_CALL_ON_PUT) {
         result 
-			= X1 * exp(-r * T2)      * cbnd(-z2, -y2, Rho) 
-			-  S * exp((b - r) * T2) * cbnd(-z1, -_y1, Rho) 
-			- X2 * exp(-r * t1)      * cnd(-y2);
+            = X1 * exp(-r * T2)      * cbnd(-z2, -y2, Rho) 
+            -  S * exp((b - r) * T2) * cbnd(-z1, -_y1, Rho) 
+            - X2 * exp(-r * t1)      * cnd(-y2);
     }
-	else if(typeflag == OOO_PUT_ON_PUT) {
+    else if(typeflag == OOO_PUT_ON_PUT) {
         result 
-			=  S * exp((b - r) * T2) * cbnd(-z1, _y1, -Rho) 
-			- X1 * exp(-r * T2)      * cbnd(-z2, y2, -Rho) 
-			+ X2 * exp(-r * t1)      * cnd(y2);
+            =  S * exp((b - r) * T2) * cbnd(-z1, _y1, -Rho) 
+            - X1 * exp(-r * T2)      * cbnd(-z2, y2, -Rho) 
+            + X2 * exp(-r * t1)      * cnd(y2);
     }
-	else {
-		/* Abort to be on the safe side */
-		abort();
-	}
+    else {
+        /* Abort to be on the safe side */
+        abort();
+    }
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef OPTIONSONOPTIONS_CHECK
 
 void check_OptionsOnOptions(void)
 {
-	/* Put on Call, options on options. */
-	double S = 500.0, X1 = 520.0, X2 = 50.0, t1 = 0.25, T2 = 0.5, r = 0.08, b = 0.05, v = 0.35;
+    /* Put on Call, options on options. */
+    double S = 500.0, X1 = 520.0, X2 = 50.0, t1 = 0.25, T2 = 0.5, r = 0.08, b = 0.05, v = 0.35;
 
-	assert_equal(OptionsOnOptions(OOO_PUT_ON_CALL, S, X1, X2, t1, T2, r, b, v), 21.1965);
+    assert_equal(OptionsOnOptions(OOO_PUT_ON_CALL, S, X1, X2, t1, T2, r, b, v), 21.1965);
 }
 
 int main(void)
 {
-	check_OptionsOnOptions();
-	return 0;
+    check_OptionsOnOptions();
+    return 0;
 }
 #endif
 

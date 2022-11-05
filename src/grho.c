@@ -25,93 +25,93 @@
 /* Rho for the generalized Black and Scholes formula */
 double rho(int fCall, double S, double X, double T, double r, double b, double v) 
 {
-	double result;
+    double result;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	if(b == 0.0)
-		result = -T * gbs(fCall, S, X, T, r, b, v);
+    if(b == 0.0)
+        result = -T * gbs(fCall, S, X, T, r, b, v);
     else {
-		const double vst = v * sqrt(T);
-		const double d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (vst);
-		const double d2 = d1 - vst;
+        const double vst = v * sqrt(T);
+        const double d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (vst);
+        const double d2 = d1 - vst;
 
-		if(fCall) 
-			result = T * X * exp(-r * T) * cnd(d2);
-		else 
-			result = -T * X * exp(-r * T) * cnd(-d2);
-	}
+        if(fCall) 
+            result = T * X * exp(-r * T) * cnd(d2);
+        else 
+            result = -T * X * exp(-r * T) * cnd(-d2);
+    }
 
-	return result;
+    return result;
 }
 
 extern double rho_call(double S, double X, double T, double r, double b, double v) 
 {
-	double result;
+    double result;
     
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	if(b == 0.0)
-		result = -T * gbs_call(S, X, T, r, b, v);
+    if(b == 0.0)
+        result = -T * gbs_call(S, X, T, r, b, v);
     else {
-		const double vst = v * sqrt(T);
-		const double d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / vst;
-		const double d2 = d1 - vst;
+        const double vst = v * sqrt(T);
+        const double d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / vst;
+        const double d2 = d1 - vst;
 
-		result = T * X * exp(-r * T) * cnd(d2);
-	}
+        result = T * X * exp(-r * T) * cnd(d2);
+    }
 
-	return result;
+    return result;
 }
 
 extern double rho_put(double S, double X, double T, double r, double b, double v) 
 {
-	double result;
+    double result;
     
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	if(b == 0.0)
-		result = -T * gbs_put(S, X, T, r, b, v);
+    if(b == 0.0)
+        result = -T * gbs_put(S, X, T, r, b, v);
     else {
-		const double vst = v * sqrt(T);
-		const double d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / vst;
-		const double d2 = d1 - vst;
+        const double vst = v * sqrt(T);
+        const double d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / vst;
+        const double d2 = d1 - vst;
 
-		result = -T * X * exp(-r * T) * cnd(-d2);
-	}
+        result = -T * X * exp(-r * T) * cnd(-d2);
+    }
 
-	return result;
+    return result;
 }
 
 #ifdef GRHO_CHECK
 
 void check_RhoForEuroCall(void)
 {
-	double S = 72.0, X = 75.0, T = 1.0, r = 0.09, v = 0.19, b = 0.09;
+    double S = 72.0, X = 75.0, T = 1.0, r = 0.09, v = 0.19, b = 0.09;
 
-	assert_equal(rho(1, S, X, T, r, b, v), 38.7325);
-	assert_equal(rho_call(S, X, T, r, b, v), 38.7325);
+    assert_equal(rho(1, S, X, T, r, b, v), 38.7325);
+    assert_equal(rho_call(S, X, T, r, b, v), 38.7325);
 }
 
 int main(void)
 {
-	check_RhoForEuroCall();
-	return 0;
+    check_RhoForEuroCall();
+    return 0;
 }
 #endif
 

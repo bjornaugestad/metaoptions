@@ -24,16 +24,16 @@
 
 double Gamma(double S, double X, double T, double r, double b, double v) 
 {
-	double vst, d1;
+    double vst, d1;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / vst;
 
     return exp((b - r) * T) * normdist(d1) / (S * vst);
@@ -43,15 +43,15 @@ double Gamma(double S, double X, double T, double r, double b, double v)
 
 void check_gamma(void)
 {
-	double S = 55.0, X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
+    double S = 55.0, X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
 
-	assert_equal(Gamma(S, X, T, r, b, v), 0.0278);
+    assert_equal(Gamma(S, X, T, r, b, v), 0.0278);
 }
 
 int main(void)
 {
-	check_gamma();
-	return 0;
+    check_gamma();
+    return 0;
 }
 #endif
 

@@ -24,61 +24,61 @@
 
 /* Two asset correlation options */
 double TwoAssetCorrelation(
-	int fCall,
-	double S1,
-	double S2,
-	double X1,
-	double X2,
-	double T,
-	double b1,
-	double b2,
-	double r,
-	double v1,
-	double v2,
-	double Rho)
+    int fCall,
+    double S1,
+    double S2,
+    double X1,
+    double X2,
+    double T,
+    double b1,
+    double b2,
+    double r,
+    double v1,
+    double v2,
+    double Rho)
 {
-	double sT, d1, d2, result;
+    double sT, d1, d2, result;
 
-	assert_valid_price(S1);
-	assert_valid_price(S2);
-	assert_valid_strike(X1);
-	assert_valid_strike(X2);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b1);
-	assert_valid_cost_of_carry(b2);
-	assert_valid_volatility(v1);
-	assert_valid_volatility(v2);
+    assert_valid_price(S1);
+    assert_valid_price(S2);
+    assert_valid_strike(X1);
+    assert_valid_strike(X2);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b1);
+    assert_valid_cost_of_carry(b2);
+    assert_valid_volatility(v1);
+    assert_valid_volatility(v2);
 
-	sT = sqrt(T);
+    sT = sqrt(T);
     d1 = (log(S1 / X1) + (b1 - pow2(v1) / 2.0) * T) / (v1 * sT);
     d2 = (log(S2 / X2) + (b2 - pow2(v2) / 2.0) * T) / (v2 * sT);
     
     if (fCall) {
         result 
-			= S2 * exp((b2 - r) * T) * cbnd(d2 + v2 * sT, d1 + Rho * v2 * sT, Rho) 
-			- X2 * exp(-r * T)       * cbnd(d2, d1, Rho);
+            = S2 * exp((b2 - r) * T) * cbnd(d2 + v2 * sT, d1 + Rho * v2 * sT, Rho) 
+            - X2 * exp(-r * T)       * cbnd(d2, d1, Rho);
     }
-	else {
-		result 
-			= X2 * exp(-r * T)       * cbnd(-d2, -d1, Rho) 
-			- S2 * exp((b2 - r) * T) * cbnd(-d2 - v2 * sT, -d1 - Rho * v2 * sT, Rho);
+    else {
+        result 
+            = X2 * exp(-r * T)       * cbnd(-d2, -d1, Rho) 
+            - S2 * exp((b2 - r) * T) * cbnd(-d2 - v2 * sT, -d1 - Rho * v2 * sT, Rho);
     }
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef TWOASSETCORRELATION_CHECK
 void check_TwoAssetCorrelation(void)
 {
-	printf("	%s(): Not implemented\n", __func__);
+    printf("	%s(): Not implemented\n", __func__);
 }
 
 int main(void)
 {
-	check_TwoAssetCorrelation();
-	return 77;
+    check_TwoAssetCorrelation();
+    return 77;
 }
 #endif
 

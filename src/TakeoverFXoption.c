@@ -25,38 +25,38 @@
 
 /* Takeover foreign exchange options */
 double TakeoverFXoption(
-	double v,
-	double b,
-	double E,
-	double X,
-	double T,
-	double r,
-	double rf,
-	double vV,
-	double vE,
-	double Rho) 
+    double v,
+    double b,
+    double E,
+    double X,
+    double T,
+    double r,
+    double rf,
+    double vV,
+    double vE,
+    double Rho) 
 {
-	double sT, a1, a2, result;
+    double sT, a1, a2, result;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(vV);
-	assert_valid_volatility(vE);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(vV);
+    assert_valid_volatility(vE);
 
-	sT = sqrt(T);
+    sT = sqrt(T);
     a1 = (log(v / b) + (rf - Rho * vE * vV - pow2(vV) / 2.0) * T) / (vV * sT);
     a2 = (log(E / X) + (r - rf - pow2(vE) / 2.0) * T) / (vE * sT);
     
     result 
-		= b * (
-			  E * exp(-rf * T) * cbnd(a2 + vE * sT, -a1 - Rho * vE * sT, -Rho) 
-			- X * exp(-r * T)  * cbnd(-a1, a2, -Rho)
-		); 
+        = b * (
+              E * exp(-rf * T) * cbnd(a2 + vE * sT, -a1 - Rho * vE * sT, -Rho) 
+            - X * exp(-r * T)  * cbnd(-a1, a2, -Rho)
+        ); 
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef TAKEOVERFXOPTION_CHECK
@@ -67,8 +67,8 @@ void check_TakeoverFXoption(void)
 int main(void)
 {
 
-	check_TakeoverFXoption();
-	return 77;
+    check_TakeoverFXoption();
+    return 77;
 }
 #endif
 

@@ -25,40 +25,40 @@
 /* Supershare options */
 double SuperShare(double S, double XL, double XH, double T, double r, double b, double v) 
 {
-	double d1, d2, result;
+    double d1, d2, result;
 
-	assert_valid_price(S);
-	assert_valid_strike(XL);
-	assert_valid_strike(XH);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(XL);
+    assert_valid_strike(XH);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
     d1 = (log(S / XL) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
     d2 = (log(S / XH) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
 
     result =  S * exp((b - r) * T) / XL * (cnd(d1) - cnd(d2));
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef SUPERSHARE_CHECK
 
 void check_SuperShare(void)
 {
-	double S = 100, XL = 90, XH = 110.0, T = 0.25, v = 0.20, r = 0.10, b = 0.0;
-	double fasit = 0.7389;
+    double S = 100, XL = 90, XH = 110.0, T = 0.25, v = 0.20, r = 0.10, b = 0.0;
+    double fasit = 0.7389;
 
-	double computed = SuperShare(S, XL, XH, T, r, b, v);
-	assert_equal(fasit, computed);
+    double computed = SuperShare(S, XL, XH, T, r, b, v);
+    assert_equal(fasit, computed);
 }
 
 int main(void)
 {
-	check_SuperShare();
-	return 0;
+    check_SuperShare();
+    return 0;
 }
 
 #endif

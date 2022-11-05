@@ -24,25 +24,25 @@
 
 /* Spread option approximation */
 double SpreadApproximation(
-	int fCall,
-	double f1,
-	double f2,
-	double X,
-	double T,
-	double r,
-	double v1,
-	double v2,
-	double Rho) 
+    int fCall,
+    double f1,
+    double f2,
+    double X,
+    double T,
+    double r,
+    double v1,
+    double v2,
+    double Rho) 
 {
-	double f2X, v, F;
+    double f2X, v, F;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v1);
-	assert_valid_volatility(v2);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v1);
+    assert_valid_volatility(v2);
 
-	f2X = f2 + X;
+    f2X = f2 + X;
     v = sqrt(pow2(v1) + pow2(v2 * f2 / f2X) - 2.0 * Rho * v1 * v2 * f2 / f2X);
     F = f1 / f2X;
     
@@ -53,18 +53,18 @@ double SpreadApproximation(
 
 void check_SpreadApproximation(void)
 {
-	double F1 = 28, F2 = 20, X = 7, T = 0.25, r = 0.05, v1 = 0.29, v2 = 0.36, Rho = 0.42;
-	double fasit = 2.1670;
+    double F1 = 28, F2 = 20, X = 7, T = 0.25, r = 0.05, v1 = 0.29, v2 = 0.36, Rho = 0.42;
+    double fasit = 2.1670;
 
-	double result = SpreadApproximation(1, F1, F2, X, T, r, v1, v2, Rho);
-	assert_equal(result, fasit);
+    double result = SpreadApproximation(1, F1, F2, X, T, r, v1, v2, Rho);
+    assert_equal(result, fasit);
 }
 
 
 int main(void)
 {
-	check_SpreadApproximation();
-	return 0;
+    check_SpreadApproximation();
+    return 0;
 }
 #endif
 

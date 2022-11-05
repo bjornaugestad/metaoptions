@@ -26,15 +26,15 @@
 /* Carry for the generalized Black and Scholes formula */
 double carry(int fCall, double S, double X, double T, double r, double b, double v) 
 {
-	double d1, result;
+    double d1, result;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
 
-	assert(r >= 0.0);			/* Interest rate >= 0.0 */
-	assert(b >= 0.0);			/* cost of carry >= 0.0 */
-	assert(v > 0.0 && v <= 100.0);	/* Volatility between 0 and 100 */
+    assert(r >= 0.0);			/* Interest rate >= 0.0 */
+    assert(b >= 0.0);			/* cost of carry >= 0.0 */
+    assert(v > 0.0 && v <= 100.0);	/* Volatility between 0 and 100 */
     
     d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
 
@@ -43,54 +43,54 @@ double carry(int fCall, double S, double X, double T, double r, double b, double
     else 
         result = -T * S * exp((b - r) * T) * cnd(-d1);
     
-	return result;
+    return result;
 }
 
 extern double carry_call(double S, double X, double T, double r, double b, double v) 
 {
-	double d1;
+    double d1;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
-	return T * S * exp((b - r) * T) * cnd(d1);
+    d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
+    return T * S * exp((b - r) * T) * cnd(d1);
 }
 
 extern double carry_put(double S, double X, double T, double r, double b, double v) 
 {
-	double d1;
+    double d1;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
-	return -T * S * exp((b - r) * T) * cnd(-d1);
+    d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (v * sqrt(T));
+    return -T * S * exp((b - r) * T) * cnd(-d1);
 }
 
 #ifdef GCARRY_CHECK
 
 void check_carry(void)
 {
-	/* Check cost of carry for a put  */
-	double S = 500.0, X = 490.0, r = 0.08, b = 0.03, v = 0.15, T = 3.0/12;
+    /* Check cost of carry for a put  */
+    double S = 500.0, X = 490.0, r = 0.08, b = 0.03, v = 0.15, T = 3.0/12;
 
-	assert_equal(carry(0, S, X, T, r, b, v), -42.2254);
-	assert_equal(carry_put(S, X, T, r, b, v), -42.2254);
+    assert_equal(carry(0, S, X, T, r, b, v), -42.2254);
+    assert_equal(carry_put(S, X, T, r, b, v), -42.2254);
 }
 
 int main(void)
 {
-	check_carry();
-	return 0;
+    check_carry();
+    return 0;
 }
 
 #endif

@@ -24,12 +24,12 @@
 /*  Black-76 European swap option */
 extern double Swapoption(int fCall, double t1, double m, double F, double X, double T, double r, double v)
 {
-	double d1, d2, result;
+    double d1, d2, result;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
  
     d1 = (log(F / X) + pow2(v) / 2.0 * T) / (v * sqrt(T));
@@ -37,34 +37,34 @@ extern double Swapoption(int fCall, double t1, double m, double F, double X, dou
 
     if(fCall) {  /* Payer swaption */
         result 
-			= ((1.0 - 1.0 / pow((1 + F / m), (t1 * m))) / F) 
-			* exp(-r * T) * (F * cnd(d1) - X * cnd(d2));
-	}
+            = ((1.0 - 1.0 / pow((1 + F / m), (t1 * m))) / F) 
+            * exp(-r * T) * (F * cnd(d1) - X * cnd(d2));
+    }
     else { /* Receiver swaption */
         result 
-			= ((1.0 - 1.0 / pow((1.0 + F / m), (t1 * m))) / F) 
-			* exp(-r * T) * (X * cnd(-d2) - F * cnd(-d1));
-	}
+            = ((1.0 - 1.0 / pow((1.0 + F / m), (t1 * m))) / F) 
+            * exp(-r * T) * (X * cnd(-d2) - F * cnd(-d1));
+    }
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef SWAPOPTION_CHECK
 void check_Swapoption(void)
 {
-	double t1 = 4, m = 2, F = 0.07, X = 0.075, T = 2, r = 0.06, v = 0.20;
-	double fasit = 1.7964 / 100.0;
-	
-	double result = Swapoption(1, t1, m, F, X, T, r, v);
-	assert_equal(result, fasit);
+    double t1 = 4, m = 2, F = 0.07, X = 0.075, T = 2, r = 0.06, v = 0.20;
+    double fasit = 1.7964 / 100.0;
+    
+    double result = Swapoption(1, t1, m, F, X, T, r, v);
+    assert_equal(result, fasit);
 }
 
 
 int main(void)
 {
-	check_Swapoption();
-	return 0;
+    check_Swapoption();
+    return 0;
 }
 #endif
 

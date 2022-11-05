@@ -26,14 +26,14 @@
 /* Black (1977) Options on futures/forwards */
 double black76(int fCall, double F, double X, double T, double r, double v) 
 {
-	double vst, d1, d2, result;
+    double vst, d1, d2, result;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(F / X) + (pow2(v) / 2.0) * T) / vst;
     d2 = d1 - vst;
 
@@ -42,65 +42,65 @@ double black76(int fCall, double F, double X, double T, double r, double v)
     else 
         result = exp(-r * T) * (X * cnd(-d2) - F * cnd(-d1));
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 extern double black76_put(double F, double X, double T, double r, double v) 
 {
-	double vst, d1;
+    double vst, d1;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(F / X) + (pow2(v) / 2) * T) / vst;
 
-	return exp(-r * T) * (X * cnd(-(d1 - vst)) - F * cnd(-d1));
+    return exp(-r * T) * (X * cnd(-(d1 - vst)) - F * cnd(-d1));
 }
 
 
 extern double black76_call(double F, double X, double T, double r, double v) 
 {
-	double vst, d1;
+    double vst, d1;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(F / X) + (pow2(v) / 2) * T) / vst;
 
-	return exp(-r * T) * (F * cnd(d1) - X * cnd((d1 - vst)));
+    return exp(-r * T) * (F * cnd(d1) - X * cnd((d1 - vst)));
 }
 
 #ifdef BLACK76_CHECK
 
 void check_black76(void)
 {
-	double T = 3.0/12.0, S = 70.0, X = 70.0, r = 0.05, v = 0.28;
-	double result, fasit_put = 1.7011, fasit_call = 1.7011;
+    double T = 3.0/12.0, S = 70.0, X = 70.0, r = 0.05, v = 0.28;
+    double result, fasit_put = 1.7011, fasit_call = 1.7011;
 
-	assert_equal(black76(0, S, X, T, r, v), 3.8579);
-	assert_equal(black76_put(S, X, T, r, v), 3.8579);
+    assert_equal(black76(0, S, X, T, r, v), 3.8579);
+    assert_equal(black76_put(S, X, T, r, v), 3.8579);
 
-	S = 19; X = 19; T = 0.75; r = 0.10, v = 0.28; /* Page 5 */
+    S = 19; X = 19; T = 0.75; r = 0.10, v = 0.28; /* Page 5 */
 
-	result = black76(0, S, X, T, r, v);
-	assert_equal(result, fasit_put);
+    result = black76(0, S, X, T, r, v);
+    assert_equal(result, fasit_put);
 
-	result = black76(1, S, X, T, r, v);
-	assert_equal(result, fasit_call);
+    result = black76(1, S, X, T, r, v);
+    assert_equal(result, fasit_call);
 
 }
 
 int main(void)
 {
-	check_black76();
-	return 0;
+    check_black76();
+    return 0;
 }
 
 #endif

@@ -24,22 +24,22 @@
 
 /* Foreign equity option struck in domestic currency */
 double ForEquOptInDomCur(
-	int fCall,
-	double E,
-	double S,
-	double X,
-	double T,
-	double r,
-	double q,
-	double vS,
-	double vE,
-	double Rho) 
+    int fCall,
+    double E,
+    double S,
+    double X,
+    double T,
+    double r,
+    double q,
+    double vS,
+    double vE,
+    double Rho) 
 {
-	double v, d1, d2;
+    double v, d1, d2;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
 
     v = sqrt(pow2(vE) + pow2(vS) + 2.0 * Rho * vE * vS);
     d1 = (log(E * S / X) + (r - q + pow2(v) / 2.0) * T) / (v * sqrt(T));
@@ -47,7 +47,7 @@ double ForEquOptInDomCur(
    
     if(fCall)
         return E * S * exp(-q * T) * cnd(d1) - X * exp(-r * T) * cnd(d2);
-	else 
+    else 
         return X * exp(-r * T) * cnd(-d2) - E * S * exp(-q * T) * cnd(-d1);
 }
 
@@ -55,17 +55,17 @@ double ForEquOptInDomCur(
 
 void check_ForEquOptInDomCur(void)
 {
-	double S = 100, X = 160, T = 0.5, E = 1.5, r = 0.08, q = 0.05, vs=0.20, ve = 0.12, Rho = 0.45;
-	double fasit = 8.3056;
+    double S = 100, X = 160, T = 0.5, E = 1.5, r = 0.08, q = 0.05, vs=0.20, ve = 0.12, Rho = 0.45;
+    double fasit = 8.3056;
 
-	double result = ForEquOptInDomCur(1, E, S, X, T, r, q, vs, ve, Rho);
-	assert_equal(result, fasit);
+    double result = ForEquOptInDomCur(1, E, S, X, T, r, q, vs, ve, Rho);
+    assert_equal(result, fasit);
 }
 
 int main(void)
 {
-	check_ForEquOptInDomCur();
-	return 0;
+    check_ForEquOptInDomCur();
+    return 0;
 }
 
 #endif

@@ -24,34 +24,34 @@
 
 /* American Calls on stocks with known dividends, Roll-Geske-Whaley */
 double RollGeskeWhaley(
-	double S,
-	double X,
-	double t1,
-	double T2,
-	double r,
-	double d,
-	double v) 
+    double S,
+    double X,
+    double t1,
+    double T2,
+    double r,
+    double d,
+    double v) 
 {
-	double Sx, result;
+    double Sx, result;
     const double infinity = 100000000.0;
 
-	double ci, HighS, LowS, I;
-	double vst1, vst2, a1, a2, b1, b2;
+    double ci, HighS, LowS, I;
+    double vst1, vst2, a1, a2, b1, b2;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(t1);
-	assert_valid_time(T2);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(t1);
+    assert_valid_time(T2);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
 
-	/* The expiry date of the option must be after the dividend payment date */
-	assert(T2 > t1);
+    /* The expiry date of the option must be after the dividend payment date */
+    assert(T2 > t1);
     
     Sx = S - d * exp(-r * t1);
     if(d <= X * (1.0 - exp(-r * (T2 - t1))) ) { 
-		/* Not optimal to exercise */
+        /* Not optimal to exercise */
         result = blackscholes(1, Sx, X, T2, r, v);
         return result;
     }
@@ -84,8 +84,8 @@ double RollGeskeWhaley(
         ci = blackscholes(1, I, X, T2 - t1, r, v);
     }
 
-	vst1 = v * sqrt(t1);
-	vst2 = v * sqrt(T2);
+    vst1 = v * sqrt(t1);
+    vst2 = v * sqrt(T2);
 
     a1 = (log(Sx / X) + (r + pow2(v) / 2.0) * T2) / vst2;
     a2 = a1 - vst2;
@@ -93,37 +93,37 @@ double RollGeskeWhaley(
     b2 = b1 - vst1;
    
     result 
-		= Sx * cnd(b1) 
-		+ Sx * cbnd(a1, -b1, -sqrt(t1 / T2)) 
-		- X * exp(-r * T2) * cbnd(a2, -b2, -sqrt(t1 / T2)) 
-		- (X - d) * exp(-r * t1) * cnd(b2);
+        = Sx * cnd(b1) 
+        + Sx * cbnd(a1, -b1, -sqrt(t1 / T2)) 
+        - X * exp(-r * T2) * cbnd(a2, -b2, -sqrt(t1 / T2)) 
+        - (X - d) * exp(-r * t1) * cnd(b2);
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef ROLLGESKEWHALEY_CHECK
 
 void check_RollGeskeWhaley(void)
 {
-	/* RollGeskeWhaley is used for American calls on stocks with known 
-	 * dividends. It computes the value of a call. 
-	 */
-	double S = 80.0;
-	double X = 82;
-	double t1 = 3.0 /12;	/* Time to expiration. */
-	double T2 = 4.0 / 12; /* Time to dividend is paid */
-	double D = 4.0; /* Dividend paid */
-	double r = 0.06;
-	double v = 0.30; 
-	assert_equal(RollGeskeWhaley(S, X, t1, T2, r, D, v), 4.3860);
+    /* RollGeskeWhaley is used for American calls on stocks with known 
+     * dividends. It computes the value of a call. 
+     */
+    double S = 80.0;
+    double X = 82;
+    double t1 = 3.0 /12;	/* Time to expiration. */
+    double T2 = 4.0 / 12; /* Time to dividend is paid */
+    double D = 4.0; /* Dividend paid */
+    double r = 0.06;
+    double v = 0.30; 
+    assert_equal(RollGeskeWhaley(S, X, t1, T2, r, D, v), 4.3860);
 }
 
 
 int main(void)
 {
-	check_RollGeskeWhaley();
-	return 0;
+    check_RollGeskeWhaley();
+    return 0;
 }
 #endif
 

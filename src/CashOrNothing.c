@@ -25,20 +25,20 @@
 /* Cash-or-nothing options */
 double CashOrNothing(int fCall, double S, double X, double K, double T, double r, double b, double v) 
 {
-	double d;
+    double d;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
     d = (log(S / X) + (b - pow2(v) / 2.0) * T) / (v * sqrt(T));
 
     if(fCall)
-		return K * exp(-r * T) * cnd(d);
-	else 
+        return K * exp(-r * T) * cnd(d);
+    else 
         return K * exp(-r * T) * cnd(-d);
 }
 
@@ -46,18 +46,18 @@ double CashOrNothing(int fCall, double S, double X, double K, double T, double r
 
 void check_CashOrNothing(void)
 {
-	double S = 100.0, X = 80.0, K = 10.0, T = 0.75, r = 0.06, b = 0.0, v = 0.35;
-	double computed, fasit = 2.6710;
+    double S = 100.0, X = 80.0, K = 10.0, T = 0.75, r = 0.06, b = 0.0, v = 0.35;
+    double computed, fasit = 2.6710;
 
-	computed = CashOrNothing(0, S, X, K, T, r, b, v);
-	assert_equal(computed, fasit);
+    computed = CashOrNothing(0, S, X, K, T, r, b, v);
+    assert_equal(computed, fasit);
 }
 
 int main(void)
 {
-	check_CashOrNothing();
-	printf("Mangler data for calls\n");
-	return 0;
+    check_CashOrNothing();
+    printf("Mangler data for calls\n");
+    return 0;
 }
 
 #endif

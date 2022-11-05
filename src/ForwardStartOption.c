@@ -25,41 +25,41 @@
 
 /* Forward start options */
 double ForwardStartOption(
-	int fCall,
-	double S,
-	double alpha,
-	double t1,
-	double T,
-	double r,
-	double b,
-	double v)
+    int fCall,
+    double S,
+    double alpha,
+    double t1,
+    double T,
+    double r,
+    double b,
+    double v)
 {
-	double result;
+    double result;
 
-	assert_valid_price(S);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_time(T);
 
     result = S * exp((b - r) * t1) * gbs(fCall, 1.0, alpha, T - t1, r, b, v);
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef FORWARDSTARTOPTION_CHECK
 
 static void check_ForwardStartOption(void)
 {
-	/* ForwardStartOption, page 37 */
-	double S = 60, T = 1.0, r = 0.08, b = 0.08 - 0.04, v = 0.30;
-	double t = 0.25, alpha = 1.1;
+    /* ForwardStartOption, page 37 */
+    double S = 60, T = 1.0, r = 0.08, b = 0.08 - 0.04, v = 0.30;
+    double t = 0.25, alpha = 1.1;
 
-	double computed = ForwardStartOption(1, S, alpha, t, T, r, b, v);
-	assert_equal(computed, 4.4064);
+    double computed = ForwardStartOption(1, S, alpha, t, T, r, b, v);
+    assert_equal(computed, 4.4064);
 }
 
 int main(void)
 {
-	check_ForwardStartOption();
-	return 0;
+    check_ForwardStartOption();
+    return 0;
 }
 
 #endif

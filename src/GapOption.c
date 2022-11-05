@@ -24,50 +24,50 @@
 
 /* Gap options */
 double GapOption(
-	int fCall,
-	double S,
-	double X1,
-	double X2,
-	double T,
-	double r,
-	double b,
-	double v) 
+    int fCall,
+    double S,
+    double X1,
+    double X2,
+    double T,
+    double r,
+    double b,
+    double v) 
 {
-	double vsqrtT, d1, d2, result;
+    double vsqrtT, d1, d2, result;
 
-	assert_valid_price(S);
-	assert_valid_strike(X1);
-	assert_valid_strike(X2);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_strike(X1);
+    assert_valid_strike(X2);
+    assert_valid_time(T);
 
-	vsqrtT = v * sqrt(T);
+    vsqrtT = v * sqrt(T);
     d1 = (log(S / X1) + (b + pow2(v) / 2.0) * T) / vsqrtT;
     d2 = d1 - vsqrtT;
 
     if(fCall)
         result = S * exp((b - r) * T) * cnd(d1) - X2 * exp(-r * T) * cnd(d2);
-	else 
+    else 
         result = X2 * exp(-r * T) * cnd(-d2) - S * exp((b - r) * T) * cnd(-d1);
 
-	return result;
+    return result;
 }
 
 #ifdef GAPOPTION_CHECK
 void check_GapOption(void)
 {
-	/* Gap options , page 88 */
-	double X1 = 50.0, X2 = 57.0;
-	double S = 50.0, T = 0.5, r = 0.09, b = 0.09, v = 0.20;
+    /* Gap options , page 88 */
+    double X1 = 50.0, X2 = 57.0;
+    double S = 50.0, T = 0.5, r = 0.09, b = 0.09, v = 0.20;
 
-	double computed = GapOption(1, S, X1, X2, T, r, b, v);
-	assert_equal(computed, -0.0053);
+    double computed = GapOption(1, S, X1, X2, T, r, b, v);
+    assert_equal(computed, -0.0053);
 }
 
 
 int main(void)
 {
-	check_GapOption();
-	return 0;
+    check_GapOption();
+    return 0;
 }
 #endif
 

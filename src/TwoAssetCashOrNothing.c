@@ -25,75 +25,75 @@
 
 /* Two asset cash-or-nothing options */
 double TwoAssetCashOrNothing(
-	int TypeFlag,
-	double S1,
-	double S2,
-	double X1,
-	double X2,
-	double K,
-	double T,
-	double r, 
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho) 
+    int TypeFlag,
+    double S1,
+    double S2,
+    double X1,
+    double X2,
+    double K,
+    double T,
+    double r, 
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho) 
 {
-	double d1, d2, result;
+    double d1, d2, result;
 
-	assert_valid_price(S1);
-	assert_valid_price(S2);
-	assert_valid_strike(X1);
-	assert_valid_strike(X2);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b1);
-	assert_valid_cost_of_carry(b2);
-	assert_valid_volatility(v1);
-	assert_valid_volatility(v2);
+    assert_valid_price(S1);
+    assert_valid_price(S2);
+    assert_valid_strike(X1);
+    assert_valid_strike(X2);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b1);
+    assert_valid_cost_of_carry(b2);
+    assert_valid_volatility(v1);
+    assert_valid_volatility(v2);
                                    
     d1 = (log(S1 / X1) + (b1 - pow2(v1) / 2.0) * T) / (v1 * sqrt(T));
     d2 = (log(S2 / X2) + (b2 - pow2(v2) / 2.0) * T) / (v2 * sqrt(T));
                                 
-	result = K * exp(-r * T);
+    result = K * exp(-r * T);
 
-	/* TODO: Replace magic numbers 20070310 boa */
-	switch(TypeFlag) {
-		case 1:
-			result *= cbnd(d1, d2, Rho);
-			break;
+    /* TODO: Replace magic numbers 20070310 boa */
+    switch(TypeFlag) {
+        case 1:
+            result *= cbnd(d1, d2, Rho);
+            break;
 
-		case 2:
-			result *= cbnd(-d1, -d2, Rho);
-			break;
+        case 2:
+            result *= cbnd(-d1, -d2, Rho);
+            break;
 
-		case 3:
-			result *= cbnd(d1, -d2, -Rho);
-			break;
+        case 3:
+            result *= cbnd(d1, -d2, -Rho);
+            break;
 
-		case 4:
-			result *= cbnd(-d1, d2, -Rho);
-			break;
+        case 4:
+            result *= cbnd(-d1, d2, -Rho);
+            break;
 
-		default: 
-			abort();
-	}
+        default: 
+            abort();
+    }
     
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 
 #ifdef TWOASSETCASHORNOTHING_CHECK
 void check_TwoAssetCashOrNothing(void)
 {
-	printf("	%s(): Not implemented\n", __func__);
+    printf("	%s(): Not implemented\n", __func__);
 }
 
 int main(void)
 {
-	check_TwoAssetCashOrNothing();
-	return 77;
+    check_TwoAssetCashOrNothing();
+    return 77;
 }
 #endif
 

@@ -24,36 +24,36 @@
 
 /* European currency options, page 6 in da book */
 extern double GarmanKohlhagen(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double rf,
-	double v)
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double rf,
+    double v)
 {
-	double d1, d2, result;
+    double d1, d2, result;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_interest_rate(rf);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_interest_rate(rf);
+    assert_valid_volatility(v);
 
-	d1 = (log(S/X) + (r-rf+pow(v, 2.0)/2.0)*T) / (v * sqrt(T));
-	d2 = d1 - (v * sqrt(T));
+    d1 = (log(S/X) + (r-rf+pow(v, 2.0)/2.0)*T) / (v * sqrt(T));
+    d2 = d1 - (v * sqrt(T));
 
-	if(fCall) 
-		result 
-			= (S * exp(-rf* T) * cnd(d1))
-			- (X * exp(-r * T) * cnd(d2));
-	else
-		result
-			= (X * exp(-r * T) * cnd(-d2))
-			- (S * exp(-rf* T) * cnd(-d1));
+    if(fCall) 
+        result 
+            = (S * exp(-rf* T) * cnd(d1))
+            - (X * exp(-r * T) * cnd(d2));
+    else
+        result
+            = (X * exp(-r * T) * cnd(-d2))
+            - (S * exp(-rf* T) * cnd(-d1));
 
-	return result;
+    return result;
 }
 
 #ifdef GARMANKOHLHAGEN_CHECK
@@ -62,12 +62,12 @@ extern double GarmanKohlhagen(
 
 int main(void)
 {
-	double S = 1.56, X = 1.60, T = 0.5, r = 0.06, rf = 0.08, v = 0.12;
-	double result, fasit = 0.0291;
+    double S = 1.56, X = 1.60, T = 0.5, r = 0.06, rf = 0.08, v = 0.12;
+    double result, fasit = 0.0291;
 
-	result = GarmanKohlhagen(1, S, X, T, r, rf, v);
-	assert_equal(result, fasit);
-	return 0;
+    result = GarmanKohlhagen(1, S, X, T, r, rf, v);
+    assert_equal(result, fasit);
+    return 0;
 }
 #endif
 

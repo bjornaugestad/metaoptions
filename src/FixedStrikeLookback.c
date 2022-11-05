@@ -33,30 +33,30 @@
 
 /* Fixed strike lookback options */
 double FixedStrikeLookback(
-	int fCall,
-	double S,
-	double SMin,
-	double SMax,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v) 
+    int fCall,
+    double S,
+    double SMin,
+    double SMax,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v) 
 {
-	double sT, vsT, vv, erT, ebT, ebrT, m, d1, d2, e1, e2, result;
+    double sT, vsT, vv, erT, ebT, ebrT, m, d1, d2, e1, e2, result;
 
-	/* TODO: Add asserts 20070310 */
+    /* TODO: Add asserts 20070310 */
 
-	sT = sqrt(T);
-	vsT = v * sT;
-	vv = v*v;
-	erT = exp(-r * T);
-	ebT = exp(b * T);
-	ebrT = exp((b - r) * T);
+    sT = sqrt(T);
+    vsT = v * sT;
+    vv = v*v;
+    erT = exp(-r * T);
+    ebT = exp(b * T);
+    ebrT = exp((b - r) * T);
     
     if(fCall) 
         m = SMax;
-	else 
+    else 
         m = SMin;
     
     d1 = (log(S / X) + (b + vv / 2.0) * T) / (vsT);
@@ -64,40 +64,40 @@ double FixedStrikeLookback(
     e1 = (log(S / m) + (b + vv / 2.0) * T) / (vsT);
     e2 = e1 -  vsT;
 
-	if(fCall) {
-		if (X > m) {
-			result 
-				= S * ebrT * cnd(d1) 
-				- X * erT * cnd(d2) 
-				+ S * erT * vv / (2.0 * b) 
-				* (-pow((S / X), (-2.0 * b / vv)) * cnd(d1 - 2.0 * b / v * sT) + ebT * cnd(d1));
-		}
-		else {
-			result 
-			= erT * (m - X) 
-			+ S * ebrT * cnd(e1) 
-			- erT * m * cnd(e2) 
-			+ S * erT * vv / (2.0 * b) 
-			* (-pow((S / m), (-2.0 * b / vv)) * cnd(e1 - 2.0 * b / v * sT) + ebT * cnd(e1));
-		}
+    if(fCall) {
+        if (X > m) {
+            result 
+                = S * ebrT * cnd(d1) 
+                - X * erT * cnd(d2) 
+                + S * erT * vv / (2.0 * b) 
+                * (-pow((S / X), (-2.0 * b / vv)) * cnd(d1 - 2.0 * b / v * sT) + ebT * cnd(d1));
+        }
+        else {
+            result 
+            = erT * (m - X) 
+            + S * ebrT * cnd(e1) 
+            - erT * m * cnd(e2) 
+            + S * erT * vv / (2.0 * b) 
+            * (-pow((S / m), (-2.0 * b / vv)) * cnd(e1 - 2.0 * b / v * sT) + ebT * cnd(e1));
+        }
     }
-	else {	/* Put */
-		if(X < m) {
-			result = -S * ebrT * cnd(-d1) + X * erT * cnd(-d1 + v * sT) 
-				+ S * erT * vv / (2.0 * b) 
-				* (pow((S / X), (-2.0 * b / vv)) * cnd(-d1 + 2.0 * b / v * sT) - ebT * cnd(-d1));
-		}
-		else {
-			result = erT * (X - m) 
-				- S * ebrT 
-				* cnd(-e1) + erT * m 
-				* cnd(-e1 + vsT) 
-				+ erT * vv / (2.0 * b) * S 
-				* (pow((S / m), (-2.0 * b / vv)) * cnd(-e1 + 2.0 * b / v * sT) - ebT * cnd(-e1));
-		}
-	}
+    else {	/* Put */
+        if(X < m) {
+            result = -S * ebrT * cnd(-d1) + X * erT * cnd(-d1 + v * sT) 
+                + S * erT * vv / (2.0 * b) 
+                * (pow((S / X), (-2.0 * b / vv)) * cnd(-d1 + 2.0 * b / v * sT) - ebT * cnd(-d1));
+        }
+        else {
+            result = erT * (X - m) 
+                - S * ebrT 
+                * cnd(-e1) + erT * m 
+                * cnd(-e1 + vsT) 
+                + erT * vv / (2.0 * b) * S 
+                * (pow((S / m), (-2.0 * b / vv)) * cnd(-e1 + 2.0 * b / v * sT) - ebT * cnd(-e1));
+        }
+    }
 
-	return result;
+    return result;
 }
 
 #ifdef FIXEDSTRIKELOOKBACK_CHECK
@@ -107,43 +107,43 @@ double FixedStrikeLookback(
 /* Page 63-64 */
 void check_FixedStrikeLookback(void)
 {
-	/* We have test data for both puts and calls, with 3 different
-	 * volatilities(0.10, 0.20,0.30), as well as 2 time values(0.5 and 1.0)
-	 * and 3 strikes. This gives use the following array:
-	 */
-	const size_t nvol = 3, nelem = 6;
-	struct {
-		double X, T; 
-		double vol[3], calls[3], puts[3];
-	} values[6] = {
-		{  95.0, 0.5, {0.10, 0.20, 0.30}, { 13.2687, 18.9263, 24.9857}, {0.6899,  4.4448,  8.9213}},
-		{ 100.0, 0.5, {0.10, 0.20, 0.30}, {  8.5126, 14.1702, 20.2296}, {3.3917,  8.3177, 13.1579}},
-		{ 105.0, 0.5, {0.10, 0.20, 0.30}, {  4.3908,  9.8905, 15.8512}, {8.1478, 13.0739, 17.9140}},
-		{  95.0, 1.0, {0.10, 0.20, 0.30}, { 18.3241, 26.0731, 34.7116}, {1.0534,  6.2813, 12.2376}},
-		{ 100.0, 1.0, {0.10, 0.20, 0.30}, { 13.8000, 21.5489, 30.1874}, {3.8079, 10.1294, 16.3889}},
-		{ 105.0, 1.0, {0.10, 0.20, 0.30}, {  9.5445, 17.2965, 25.9002}, {8.3321, 14.6536, 20.9130}}
-	};
+    /* We have test data for both puts and calls, with 3 different
+     * volatilities(0.10, 0.20,0.30), as well as 2 time values(0.5 and 1.0)
+     * and 3 strikes. This gives use the following array:
+     */
+    const size_t nvol = 3, nelem = 6;
+    struct {
+        double X, T; 
+        double vol[3], calls[3], puts[3];
+    } values[6] = {
+        {  95.0, 0.5, {0.10, 0.20, 0.30}, { 13.2687, 18.9263, 24.9857}, {0.6899,  4.4448,  8.9213}},
+        { 100.0, 0.5, {0.10, 0.20, 0.30}, {  8.5126, 14.1702, 20.2296}, {3.3917,  8.3177, 13.1579}},
+        { 105.0, 0.5, {0.10, 0.20, 0.30}, {  4.3908,  9.8905, 15.8512}, {8.1478, 13.0739, 17.9140}},
+        {  95.0, 1.0, {0.10, 0.20, 0.30}, { 18.3241, 26.0731, 34.7116}, {1.0534,  6.2813, 12.2376}},
+        { 100.0, 1.0, {0.10, 0.20, 0.30}, { 13.8000, 21.5489, 30.1874}, {3.8079, 10.1294, 16.3889}},
+        { 105.0, 1.0, {0.10, 0.20, 0.30}, {  9.5445, 17.2965, 25.9002}, {8.3321, 14.6536, 20.9130}}
+    };
 
-	double S = 100.0, Smin = 100.0, Smax = 100.0, r = 0.10, b = 0.10;
-	size_t i, v;
+    double S = 100.0, Smin = 100.0, Smax = 100.0, r = 0.10, b = 0.10;
+    size_t i, v;
 
-	for(i = 0; i < nelem; i++) {
-		for(v = 0; v < nvol; v++) {
-			double result = FixedStrikeLookback(0, S, Smin, Smax, values[i].X, values[i].T, r, b, values[i].vol[v]);
-			assert_equal(result, values[i].puts[v]);
-		}
-		for(v = 0; v < nvol; v++) {
-			double result = FixedStrikeLookback(1, S, Smin, Smax, values[i].X, values[i].T, r, b, values[i].vol[v]);
-			assert_equal(result, values[i].calls[v]);
-		}
-	}
+    for(i = 0; i < nelem; i++) {
+        for(v = 0; v < nvol; v++) {
+            double result = FixedStrikeLookback(0, S, Smin, Smax, values[i].X, values[i].T, r, b, values[i].vol[v]);
+            assert_equal(result, values[i].puts[v]);
+        }
+        for(v = 0; v < nvol; v++) {
+            double result = FixedStrikeLookback(1, S, Smin, Smax, values[i].X, values[i].T, r, b, values[i].vol[v]);
+            assert_equal(result, values[i].calls[v]);
+        }
+    }
 }
 
 
 int main(void)
 {
-	check_FixedStrikeLookback();
-	return 0;
+    check_FixedStrikeLookback();
+    return 0;
 }
 #endif
 

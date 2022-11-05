@@ -32,13 +32,13 @@
 
 #define assert_equal(a, b)\
 {\
-	double x = fabs((a) - (b));\
-	double maxdiff = 0.0001;\
-	if(x > maxdiff) {\
-		fprintf(stderr, "%s():%s(%d): assert_equal failed for values %.10g and %.10g\n",\
-		__func__, __FILE__, __LINE__, (a), (b));\
-		abort();\
-	}\
+    double x = fabs((a) - (b));\
+    double maxdiff = 0.0001;\
+    if(x > maxdiff) {\
+        fprintf(stderr, "%s():%s(%d): assert_equal failed for values %.10g and %.10g\n",\
+        __func__, __FILE__, __LINE__, (a), (b));\
+        abort();\
+    }\
 }
 #endif
 
@@ -200,146 +200,146 @@ extern double vega(double S, double X, double T, double r, double b, double v);
     /*t1 time to dividend payout */
     /*T2 time to option expiration */
 double RollGeskeWhaley(
-	double S,
-	double X,
-	double t1,
-	double T2,
-	double r,
-	double d,
-	double v);
+    double S,
+    double X,
+    double t1,
+    double T2,
+    double r,
+    double d,
+    double v);
 
 /* The Barone-Adesi and Whaley (1987) American approximation */
 double BAWAmericanApprox(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v);
 
 /* The Bjerksund and Stensland (1993) American approximation */
 double BSAmericanApprox(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v);
 
 /* Partial-time fixed strike lookback options */
 double PartialFixedLB(
-	int fCall,
-	double S,
-	double X,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double X,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 double EuropeanExchangeOption(
-	double S1,
-	double S2,
-	double Q1,
-	double Q2,
-	double T,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho);
+    double S1,
+    double S2,
+    double Q1,
+    double Q2,
+    double T,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho);
 
 double AmericanExchangeOption(
-	int fCall,
-	double S1,
-	double S2,
-	double Q1,
-	double Q2,
-	double T,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho);
+    int fCall,
+    double S1,
+    double S2,
+    double Q1,
+    double Q2,
+    double T,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho);
 
 extern double AssetOrNothing_put(double S, double X, double T, double r, double b, double v);
 extern double AssetOrNothing_call(double S, double X, double T, double r, double b, double v);
 extern double AssetOrNothing(int fCall, double S, double X, double T, double r, double b, double v);
 
 double BSAmericanCallApprox(
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v);
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v);
 
 double CashOrNothing(
-	int fCall,
-	double S,
-	double X,
-	double K,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double X,
+    double K,
+    double T,
+    double r,
+    double b,
+    double v);
 
 double ComplexChooser(
-	double S,
-	double Xc,
-	double Xp,
-	double T,
-	double Tc, 
-	double Tp,
-	double r,
-	double b,
-	double v);
+    double S,
+    double Xc,
+    double Xp,
+    double T,
+    double Tc, 
+    double Tp,
+    double r,
+    double b,
+    double v);
 
 double EquityLinkedFXO(
-	int fCall,
-	double E,
-	double S,
-	double X,
-	double T,
-	double r,
-	double rf,
-	double q,
-	double vS,
-	double vE,
-	double Rho);
+    int fCall,
+    double E,
+    double S,
+    double X,
+    double T,
+    double r,
+    double rf,
+    double q,
+    double vS,
+    double vE,
+    double Rho);
 
 extern double Executive_call(double S, double X, double T, double r, double b, double v, double lambda);
 extern double Executive_put(double S, double X, double T, double r, double b, double v, double lambda);
 extern double Executive(int fCall, double S, double X, double T, double r, double b, double v, double lambda);
 
 double ExchangeExchangeOption(
-	int TypeFlag,
-	double S1,
-	double S2,
-	double q,
-	double t1,
-	double T2,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho);
+    int TypeFlag,
+    double S1,
+    double S2,
+    double q,
+    double t1,
+    double T2,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho);
 
 double ExtendibleWriter(
-	int fCall,
-	double S,
-	double X1,
-	double X2,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double X1,
+    double X2,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 
 
@@ -353,130 +353,130 @@ double ExtendibleWriter(
 #define ESO_REVERSE_CALL	3
 #define ESO_REVERSE_PUT		4
 double ExtremeSpreadOption(
-	int TypeFlag,
-	double S,
-	double SMin,
-	double SMax,
-	double t1,
-	double T,
-	double r,
-	double b,
-	double v); 
+    int TypeFlag,
+    double S,
+    double SMin,
+    double SMax,
+    double t1,
+    double T,
+    double r,
+    double b,
+    double v); 
 
 double FixedStrikeLookback(
-	int fCall,
-	double S,
-	double SMin,
-	double SMax,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double SMin,
+    double SMax,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v);
 
 double FloatingStrikeLookback(
-	int fCall,
-	double S,
-	double SMin,
-	double SMax,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double SMin,
+    double SMax,
+    double T,
+    double r,
+    double b,
+    double v);
 
 
 double ForEquOptInDomCur(
-	int fCall,
-	double E,
-	double S,
-	double X,
-	double T,
-	double r,
-	double q,
-	double vS,
-	double vE,
-	double Rho);
+    int fCall,
+    double E,
+    double S,
+    double X,
+    double T,
+    double r,
+    double q,
+    double vS,
+    double vE,
+    double Rho);
 
 double ForwardStartOption(
-	int fCall,
-	double S,
-	double alpha,
-	double t1,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double alpha,
+    double t1,
+    double T,
+    double r,
+    double b,
+    double v);
 
 double GapOption(
-	int fCall,
-	double S,
-	double X1,
-	double X2,
-	double T,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double X1,
+    double X2,
+    double T,
+    double r,
+    double b,
+    double v);
 
 double GeometricAverageRateOption(
-	int fCall,
-	double S,
-	double SA,
-	double X,
-	double T,
-	double T2,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double SA,
+    double X,
+    double T,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 double JumpDiffusion(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double v,
-	double lambda,
-	double gamma_val);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double v,
+    double lambda,
+    double gamma_val);
 
 double LevyAsian(
-	int fCall,
-	double S,
-	double SA,
-	double X,
-	double T,
-	double T2,
-	double r,
-	double b,
-	double v);
+    int fCall,
+    double S,
+    double SA,
+    double X,
+    double T,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 double MiltersenSchwartz(
-	int fCall,
-	double Pt,
-	double FT,
-	double X,
-	double t1,
-	double T2,
-	double vS,
-	double vE,
-	double vf,
-	double rhoSe,
-	double rhoSf,
-	double rhoef,
-	double Kappae,
-	double Kappaf);
+    int fCall,
+    double Pt,
+    double FT,
+    double X,
+    double t1,
+    double T2,
+    double vS,
+    double vE,
+    double vf,
+    double rhoSe,
+    double rhoSf,
+    double rhoef,
+    double Kappae,
+    double Kappaf);
 
 double OptionsOnTheMaxMin(
-	const char* TypeFlag,
-	double S1,
-	double S2,
-	double X,
-	double T,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho);
+    const char* TypeFlag,
+    double S1,
+    double S2,
+    double X,
+    double T,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho);
 
 /* We can have a couple of combinations for OoO, 
  * and use an integer to define the combos. No enums since
@@ -487,42 +487,42 @@ double OptionsOnTheMaxMin(
 #define OOO_PUT_ON_PUT 		3
 #define OOO_CALL_ON_PUT		4
 double OptionsOnOptions(
-	int typeflag,
-	double S,
-	double X1,
-	double X2,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v);
+    int typeflag,
+    double S,
+    double X1,
+    double X2,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 double PartialFloatLB(
-	int fCall,
-	double S,
-	double SMin,
-	double SMax,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v,
-	double lambda);
+    int fCall,
+    double S,
+    double SMin,
+    double SMax,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v,
+    double lambda);
 
 
 /*************** BARRIER FORMULAS START ******************/
 double BinaryBarrier(
-	int TypeFlag,
-	double S,
-	double X,
-	double H,
-	double K,
-	double T,
-	double r,
-	double b,
-	double v,
-	int eta,
-	int phi);
+    int TypeFlag,
+    double S,
+    double X,
+    double H,
+    double K,
+    double T,
+    double r,
+    double b,
+    double v,
+    int eta,
+    int phi);
 
 /* We have 4 types of DoubleBarrier options, defined here */
 #define DB_PUT_IN		1
@@ -530,17 +530,17 @@ double BinaryBarrier(
 #define DB_CALL_IN		3
 #define DB_CALL_OUT		4
 double DoubleBarrier(
-	int TypeFlag,
-	double S,
-	double X,
-	double L,
-	double U,
-	double T,
-	double r,
-	double b,
-	double v,
-	double delta1,
-	double delta2);
+    int TypeFlag,
+    double S,
+    double X,
+    double L,
+    double U,
+    double T,
+    double r,
+    double b,
+    double v,
+    double delta1,
+    double delta2);
 
 
 double DiscreteAdjustedBarrier(double S, double H, double v, double dt);
@@ -567,64 +567,64 @@ double DiscreteAdjustedBarrier(double S, double H, double v, double dt);
 #define SB_PUT_UP_IN		7
 #define SB_PUT_UP_OUT		8
 double StandardBarrier(
-	int typeflag,
-	double S,
-	double X,
-	double H,
-	double K,
-	double T,
-	double r,
-	double b,
-	double v);
+    int typeflag,
+    double S,
+    double X,
+    double H,
+    double K,
+    double T,
+    double r,
+    double b,
+    double v);
 
 double SoftBarrier(
-	int typeflag,
-	double S,
-	double X,
-	double L,
-	double U,
-	double T,
-	double r,
-	double b,
-	double v); 
+    int typeflag,
+    double S,
+    double X,
+    double L,
+    double U,
+    double T,
+    double r,
+    double b,
+    double v); 
 
 double PartialTimeTwoAssetBarrier(
-	int typeflag,
-	double S1,
-	double S2,
-	double X,
-	double H,
-	double t1,
-	double T2,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho);
+    int typeflag,
+    double S1,
+    double S2,
+    double X,
+    double H,
+    double t1,
+    double T2,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho);
 
 double LookBarrier(
-	int type,
-	double S,
-	double X,
-	double H,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v);
+    int type,
+    double S,
+    double X,
+    double H,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 extern double BarrierBinomial(
-	int EuropeanOption,
-	int type,
-	double S,
-	double X,
-	double H,
-	double T,
-	double r,
-	double b,
-	double v,
-	int n);
+    int EuropeanOption,
+    int type,
+    double S,
+    double X,
+    double H,
+    double T,
+    double r,
+    double b,
+    double v,
+    int n);
 
 
 
@@ -644,256 +644,256 @@ extern double BarrierBinomial(
 #define PTB_PUT_DOWN_OUT_B2		10
 
 double PartialTimeBarrier(
-	const char* TypeFlag,
-	double S,
-	double X,
-	double H,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v);
+    const char* TypeFlag,
+    double S,
+    double X,
+    double H,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v);
 
 double TwoAssetBarrier(
-	int type,
-	double S1,
-	double S2,
-	double X,
-	double H,
-	double T,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho); 
+    int type,
+    double S1,
+    double S2,
+    double X,
+    double H,
+    double T,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho); 
 
 /*************** BARRIER FORMULAS END  ******************/
 
 double Quanto(
-	int fCall,
-	double Ep,
-	double S,
-	double X,
-	double T,
-	double r,
-	double rf,
-	double q,
-	double vS,
-	double vE,
-	double Rho); 
+    int fCall,
+    double Ep,
+    double S,
+    double X,
+    double T,
+    double r,
+    double rf,
+    double q,
+    double vS,
+    double vE,
+    double Rho); 
 
 double SimpleChooser(
-	double S,
-	double X,
-	double t1,
-	double T2,
-	double r,
-	double b,
-	double v); 
+    double S,
+    double X,
+    double t1,
+    double T2,
+    double r,
+    double b,
+    double v); 
 
 double SpreadApproximation(
-	int fCall,
-	double f1,
-	double f2,
-	double X,
-	double T,
-	double r,
-	double v1,
-	double v2,
-	double Rho); 
+    int fCall,
+    double f1,
+    double f2,
+    double X,
+    double T,
+    double r,
+    double v1,
+    double v2,
+    double Rho); 
 
 double SuperShare(
-	double S,
-	double XL,
-	double XH,
-	double T,
-	double r,
-	double b,
-	double v); 
+    double S,
+    double XL,
+    double XH,
+    double T,
+    double r,
+    double b,
+    double v); 
 
 double TakeoverFXoption(
-	double v,
-	double b,
-	double E,
-	double X,
-	double T,
-	double r,
-	double rf,
-	double vV,
-	double vE,
-	double Rho); 
+    double v,
+    double b,
+    double E,
+    double X,
+    double T,
+    double r,
+    double rf,
+    double vV,
+    double vE,
+    double Rho); 
 
 double TimeSwitchOption(
-	int fCall,
-	double S,
-	double X,
-	double a,
-	double T,
-	int m ,
-	double dt,
-	double r,
-	double b,
-	double v); 
+    int fCall,
+    double S,
+    double X,
+    double a,
+    double T,
+    int m ,
+    double dt,
+    double r,
+    double b,
+    double v); 
 
 double TurnbullWakemanAsian(
-	int fCall,
-	double S,
-	double SA,
-	double X,
-	double T,
-	double T2,
-	double tau,
-	double r,
-	double b,
-	double v); 
+    int fCall,
+    double S,
+    double SA,
+    double X,
+    double T,
+    double T2,
+    double tau,
+    double r,
+    double b,
+    double v); 
 
 double TwoAssetCashOrNothing(
-	int TypeFlag,
-	double S1,
-	double S2,
-	double X1,
-	double X2,
-	double K,
-	double T,
-	double r, 
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho); 
+    int TypeFlag,
+    double S1,
+    double S2,
+    double X1,
+    double X2,
+    double K,
+    double T,
+    double r, 
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho); 
 
 extern double TwoAssetCorrelation(
-	int fCall,
-	double S1,
-	double S2,
-	double X1,
-	double X2,
-	double T,
-	double b1,
-	double b2,
-	double r,
-	double v1,
-	double v2,
-	double Rho);
+    int fCall,
+    double S1,
+    double S2,
+    double X1,
+    double X2,
+    double T,
+    double b1,
+    double b2,
+    double r,
+    double v1,
+    double v2,
+    double Rho);
 
 extern double merton73(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double q,
-	double v); 
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double q,
+    double v); 
 
 extern double GarmanKohlhagen(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,	/* Risk free rate for the currency */
-	double rf,	/* Risk free rate for the foreign currency */
-	double v); 
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,	/* Risk free rate for the currency */
+    double rf,	/* Risk free rate for the foreign currency */
+    double v); 
 
 /* Find the Implied Volatility for a european stock option */
 extern int NewtonRaphson(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double cm,
-	double *piv);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double cm,
+    double *piv);
 
 extern int NewtonRaphson_put(
-	double S,
-	double X,
-	double T,
-	double r,
-	double cm,
-	double *piv);
+    double S,
+    double X,
+    double T,
+    double r,
+    double cm,
+    double *piv);
 
 extern int NewtonRaphson_call(
-	double S,
-	double X,
-	double T,
-	double r,
-	double cm,
-	double *piv);
+    double S,
+    double X,
+    double T,
+    double r,
+    double cm,
+    double *piv);
 
 /* Black-76 European swap option */
 extern double Swapoption(
-	int fCall,
-	double t1,
-	double m,
-	double F,
-	double X,
-	double T,
-	double r,
-	double v);
+    int fCall,
+    double t1,
+    double m,
+    double F,
+    double X,
+    double T,
+    double r,
+    double v);
 
 extern double VasicekBondPrice(
-	double t1,
-	double T,
-	double r,
-	double Theta,
-	double Kappa,
-	double v);
+    double t1,
+    double T,
+    double r,
+    double Theta,
+    double Kappa,
+    double v);
 
 double VasicekBondOption(
-	int fCall,
-	double F,
-	double X,
-	double tau,
-	double T,
-	double r,
-	double Theta,
-	double kappa,
-	double v);
+    int fCall,
+    double F,
+    double X,
+    double tau,
+    double T,
+    double r,
+    double Theta,
+    double kappa,
+    double v);
 
 /* 
  * Bisection algorithm for finding IV 
  * using BAWAmericanApprox() to compute value.
  */
 extern double BAWbisection(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double price);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double price);
 
 extern double BSbisection(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double price);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double price);
 
 extern int bisection(
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double price,
-	double *piv);
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double price,
+    double *piv);
 
 /* Cox-Ross-Rubinstein binomial tree */
 extern double CRRBinomial(
-	int EuropeanOption,
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v,
-	int n);
+    int EuropeanOption,
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v,
+    int n);
 
 /* Convertible bonds in binomial trees.
  * T2: Time to maturity 
@@ -906,29 +906,29 @@ extern double CRRBinomial(
  */
 
 extern double ConvertibleBond(
-	int EuropeanOption,
-	double S,
-	double X,
-	double T2,
-	double t1,
-	double r,
-	double k,
-	double q,
-	double v,
-	double F,
-	double Coupon,
-	int n);
+    int EuropeanOption,
+    double S,
+    double X,
+    double T2,
+    double t1,
+    double r,
+    double k,
+    double q,
+    double v,
+    double F,
+    double Coupon,
+    int n);
 
 extern double TrinomialTree(
-	int EuropeanOption,
-	int fCall,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v,
-	double n);
+    int EuropeanOption,
+    int fCall,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v,
+    double n);
 
 /*
  * The TypeFlag can have 7 different values, from 1..7.
@@ -947,36 +947,36 @@ extern double TrinomialTree(
 #define TDB_OPTIONTYPE_MAX				7
 
 extern double ThreeDimensionalBinomial(
-	int type,
-	int EuropeanOption,
-	int fCall,
-	double S1,
-	double S2,
-	double Q1,
-	double Q2,
-	double X1,
-	double X2,
-	double T,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho,
-	int n);
+    int type,
+    int EuropeanOption,
+    int fCall,
+    double S1,
+    double S2,
+    double Q1,
+    double Q2,
+    double X1,
+    double X2,
+    double T,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho,
+    int n);
 
 extern double ImpliedTrinomialTree(
-	const char* ReturnFlag,
-	int STEPn,
-	int STATEi,
-	double S,
-	double X,
-	double T,
-	double r,
-	double b,
-	double v,
-	double Skew,
-	int nSteps);
+    const char* ReturnFlag,
+    int STEPn,
+    int STATEi,
+    double S,
+    double X,
+    double T,
+    double r,
+    double b,
+    double v,
+    double Skew,
+    int nSteps);
 
 #endif
 

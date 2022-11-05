@@ -24,20 +24,20 @@
 
 /* Critical value complex chooser option */
 static double CriticalValueChooser(
-	double S,
-	double Xc,
-	double Xp,
-	double T, 
-	double Tc,
-	double Tp,
-	double r,
-	double b,
-	double v) 
+    double S,
+    double Xc,
+    double Xp,
+    double T, 
+    double Tc,
+    double Tp,
+    double r,
+    double b,
+    double v) 
 {
-	double Sv, ci, Pi, dc, dp, yi, di;
+    double Sv, ci, Pi, dc, dp, yi, di;
 
-	assert_valid_price(S);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_time(T);
 
     Sv = S;
     
@@ -69,31 +69,31 @@ static double CriticalValueChooser(
 
 /* Complex chooser options */
 double ComplexChooser(
-	double S,
-	double Xc,
-	double Xp,
-	double T,
-	double Tc, 
-	double Tp,
-	double r,
-	double b,
-	double v) 
+    double S,
+    double Xc,
+    double Xp,
+    double T,
+    double Tc, 
+    double Tp,
+    double r,
+    double b,
+    double v) 
 {
-	assert_valid_price(S);
-	assert_valid_strike(Xc);
-	assert_valid_strike(Xp);
-	assert_valid_time(Tc);
-	assert_valid_time(Tp);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(Xc);
+    assert_valid_strike(Xp);
+    assert_valid_time(Tc);
+    assert_valid_time(Tp);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	{ /* No C99 */
+    { /* No C99 */
 
-	const double vsT = v * sqrt(T);
-	const double vsTc = v * sqrt(Tc);
-	const double vsTp = v * sqrt(Tp);
-	const double bv2 = b + pow2(v)/2.0;
+    const double vsT = v * sqrt(T);
+    const double vsTc = v * sqrt(Tc);
+    const double vsTp = v * sqrt(Tp);
+    const double bv2 = b + pow2(v)/2.0;
 
     const double I = CriticalValueChooser(S, Xc, Xp, T, Tc, Tp, r, b, v);
     const double d1 = (log(S / I) + bv2 * T) / vsT;
@@ -104,28 +104,28 @@ double ComplexChooser(
     const double rho2 = sqrt(T / Tp);
     
     const double result 
-		=  S * exp((b - r) * Tc) * cbnd(d1, Y1, rho1) 
-		- Xc * exp(-r * Tc)      * cbnd(d2, Y1 - vsTc, rho1) 
-		-  S * exp((b - r) * Tp) * cbnd(-d1, -y2, rho2) 
-		+ Xp * exp(-r * Tp)      * cbnd(-d2, -y2 + vsTp, rho2);
+        =  S * exp((b - r) * Tc) * cbnd(d1, Y1, rho1) 
+        - Xc * exp(-r * Tc)      * cbnd(d2, Y1 - vsTc, rho1) 
+        -  S * exp((b - r) * Tp) * cbnd(-d1, -y2, rho2) 
+        + Xp * exp(-r * Tp)      * cbnd(-d2, -y2 + vsTp, rho2);
 
-	return result;
-	} /* No C99 */
+    return result;
+    } /* No C99 */
 }
 
 #ifdef COMPLEXCHOOSER_CHECK
 void check_ComplexChooser(void)
 {
-	double S = 50, Xc = 55.0, Xp = 48.0, Tc = 0.5, Tp = 0.5833, T = 0.25, r = 0.10, b = 0.05, v = 0.35;
+    double S = 50, Xc = 55.0, Xp = 48.0, Tc = 0.5, Tp = 0.5833, T = 0.25, r = 0.10, b = 0.05, v = 0.35;
 
-	assert_equal(ComplexChooser(S, Xc, Xp, T, Tc, Tp, r, b, v), 6.0508);
+    assert_equal(ComplexChooser(S, Xc, Xp, T, Tc, Tp, r, b, v), 6.0508);
 }
 
 
 int main(void)
 {
-	check_ComplexChooser();
-	return 0;
+    check_ComplexChooser();
+    return 0;
 }
 #endif
 

@@ -23,28 +23,28 @@
 
 /* Vasicek: options on zero coupon bonds, page 151-152.*/
 double VasicekBondOption(
-	int fCall,
-	double F,
-	double X,
-	double tau,
-	double T,
-	double r,
-	double Theta,
-	double kappa,
-	double v) 
+    int fCall,
+    double F,
+    double X,
+    double tau,
+    double T,
+    double r,
+    double Theta,
+    double kappa,
+    double v) 
 {
-	double PtT, Pt_tau, vp, H, result;
+    double PtT, Pt_tau, vp, H, result;
 
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
     X = X / F;
     PtT = VasicekBondPrice(0.0, T, r, Theta, kappa, v);
     Pt_tau = VasicekBondPrice(0.0, tau, r, Theta, kappa, v);
     vp	= sqrt(pow2(v) * (1.0 - exp(-2.0 * kappa * T)) / (2.0 * kappa)) 
-		* (1.0 - exp(-kappa * (tau - T))) / kappa;
+        * (1.0 - exp(-kappa * (tau - T))) / kappa;
    
     H = 1.0 / vp * log(Pt_tau / (PtT * X)) + vp / 2.0;
     
@@ -53,30 +53,30 @@ double VasicekBondOption(
     else
         result = F * (X * PtT * cnd(-H + vp) - Pt_tau * cnd(-H));
     
-	return result;
+    return result;
 }
 
 #ifdef VASICEKBONDOPTION_CHECK
 void check_VasicekBondOption(void)
 {
-	double F = 100, X = 92, T = 2, r = 0.08, v = 0.03;
-	double mean_reverting_level = 0.09;
-	double mean_reverting_rate = 0.05;
-	double result;
+    double F = 100, X = 92, T = 2, r = 0.08, v = 0.03;
+    double mean_reverting_level = 0.09;
+    double mean_reverting_rate = 0.05;
+    double result;
 
-	double tau = T * 1; /* Tror dette er feil, men jeg er så trøtt... */
-	double kappa = mean_reverting_rate;
-	double Theta = mean_reverting_level;
+    double tau = T * 1; /* Tror dette er feil, men jeg er så trøtt... */
+    double kappa = mean_reverting_rate;
+    double Theta = mean_reverting_level;
 
-	result = VasicekBondOption(1, F, X, tau, T, r, Theta, kappa, v);
-	assert_equal(result, 0.1394); /* See page 152 */
+    result = VasicekBondOption(1, F, X, tau, T, r, Theta, kappa, v);
+    assert_equal(result, 0.1394); /* See page 152 */
 }
 
 int main(void)
 {
 
-	check_VasicekBondOption();
-	return 0;
+    check_VasicekBondOption();
+    return 0;
 }
 #endif
 

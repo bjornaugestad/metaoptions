@@ -25,32 +25,32 @@
 
 /* Equity linked foreign exchange option */
 double EquityLinkedFXO(
-	int fCall,
-	double E,
-	double S,
-	double X,
-	double T,
-	double r,
-	double rf,
-	double q,
-	double vS,
-	double vE,
-	double Rho) 
+    int fCall,
+    double E,
+    double S,
+    double X,
+    double T,
+    double r,
+    double rf,
+    double q,
+    double vS,
+    double vE,
+    double Rho) 
 {
-	double d1, d2, XS, ES;
+    double d1, d2, XS, ES;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
 
     d1 = (log(E / X) + (r - rf + Rho * vS * vE + pow2(vE) / 2.0) * T) / (vE * sqrt(T));
     d2 = d1 - vE * sqrt(T);
-	XS = X * S * exp((rf - r - q - Rho * vS * vE) * T);
-	ES = E * S * exp(-q * T);
+    XS = X * S * exp((rf - r - q - Rho * vS * vE) * T);
+    ES = E * S * exp(-q * T);
 
     if(fCall) 
         return ES * cnd(d1)  - XS * cnd(d2);
-	else 
+    else 
         return XS * cnd(-d2) - ES * cnd(-d1);
 }
 
@@ -58,18 +58,18 @@ double EquityLinkedFXO(
 
 void check_EquityLinkedFXO(void)
 {
-	double S = 100, E = 1.5, X = 1.52, T = 0.25, r = 0.08, rf = 0.05, q = 0.04, vS = 0.20, vE = 0.12, Rho = -0.40;
-	double result, fasit = 4.2089;
-	
-	result = EquityLinkedFXO(0, E, S, X, T, r, rf, q, vS, vE, Rho);
-	assert_equal(result, fasit);
+    double S = 100, E = 1.5, X = 1.52, T = 0.25, r = 0.08, rf = 0.05, q = 0.04, vS = 0.20, vE = 0.12, Rho = -0.40;
+    double result, fasit = 4.2089;
+    
+    result = EquityLinkedFXO(0, E, S, X, T, r, rf, q, vS, vE, Rho);
+    assert_equal(result, fasit);
 }
 
 int main(void)
 {
-	check_EquityLinkedFXO();
-	printf("Mangler data for calls\n");
-	return 0;
+    check_EquityLinkedFXO();
+    printf("Mangler data for calls\n");
+    return 0;
 }
 
 #endif

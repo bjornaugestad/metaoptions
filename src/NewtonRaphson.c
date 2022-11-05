@@ -32,15 +32,15 @@
 
 int NewtonRaphson(int fCall, double S, double X, double T, double r, double cm, double *piv)
 {
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
 
-	if(fCall)
-		return NewtonRaphson_call(S, X, T, r, cm, piv);
-	else
-		return NewtonRaphson_put(S, X, T, r, cm, piv);
+    if(fCall)
+        return NewtonRaphson_call(S, X, T, r, cm, piv);
+    else
+        return NewtonRaphson_put(S, X, T, r, cm, piv);
 }
 
 /*
@@ -52,56 +52,56 @@ int NewtonRaphson(int fCall, double S, double X, double T, double r, double cm, 
  */
 int NewtonRaphson_call(double S, double X, double T, double r, double cm, double *piv)
 {
-	double vi, ci, vegai;
+    double vi, ci, vegai;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
 
-	/* Compute the Manaster and Koehler seed value (vi) */
-	vi = sqrt(fabs(log(S/X) + r * T) * 2.0/T);
-	ci = gbs_call(S, X, T, r, r, vi);
-	vegai = vega(S, X, T, r, r, vi);
+    /* Compute the Manaster and Koehler seed value (vi) */
+    vi = sqrt(fabs(log(S/X) + r * T) * 2.0/T);
+    ci = gbs_call(S, X, T, r, r, vi);
+    vegai = vega(S, X, T, r, r, vi);
 
-	while(fabs(cm - ci) > epsilon) {
-		vi -= (ci - cm)/vegai;
-		if(vi < VOLATILITY_MIN || vi > VOLATILITY_MAX)
-			return 0;
+    while(fabs(cm - ci) > epsilon) {
+        vi -= (ci - cm)/vegai;
+        if(vi < VOLATILITY_MIN || vi > VOLATILITY_MAX)
+            return 0;
 
-		ci = gbs_call(S, X, T, r, r, vi);
-		vegai = vega(S, X, T, r, r, vi);
-	}
+        ci = gbs_call(S, X, T, r, r, vi);
+        vegai = vega(S, X, T, r, r, vi);
+    }
 
-	*piv = vi;
-	return 1;
+    *piv = vi;
+    return 1;
 }
 
 int NewtonRaphson_put(double S, double X, double T, double r, double cm, double *piv)
 {
-	double vi, ci, vegai;
+    double vi, ci, vegai;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
 
-	/* Compute the Manaster and Koehler seed value (vi) */
-	vi = sqrt(fabs(log(S/X) + r * T) * 2.0/T);
-	ci = gbs_put(S, X, T, r, r, vi);
-	vegai = vega(S, X, T, r, r, vi);
+    /* Compute the Manaster and Koehler seed value (vi) */
+    vi = sqrt(fabs(log(S/X) + r * T) * 2.0/T);
+    ci = gbs_put(S, X, T, r, r, vi);
+    vegai = vega(S, X, T, r, r, vi);
 
-	while(fabs(cm - ci) > epsilon) {
-		vi -= (ci - cm)/vegai;
-		if(vi < VOLATILITY_MIN || vi > VOLATILITY_MAX)
-			return 0;
+    while(fabs(cm - ci) > epsilon) {
+        vi -= (ci - cm)/vegai;
+        if(vi < VOLATILITY_MIN || vi > VOLATILITY_MAX)
+            return 0;
 
-		ci = gbs_put(S, X, T, r, r, vi);
-		vegai = vega(S, X, T, r, r, vi);
-	}
+        ci = gbs_put(S, X, T, r, r, vi);
+        vegai = vega(S, X, T, r, r, vi);
+    }
 
-	*piv = vi;
-	return 1;
+    *piv = vi;
+    return 1;
 }
 
 #ifdef NEWTONRAPHSON_CHECK
@@ -113,19 +113,19 @@ int NewtonRaphson_put(double S, double X, double T, double r, double cm, double 
  */
 void check_NewtonRaphson(void)
 {
-	int fCall = 1, ok;
-	double iv, S = 100.0, X = 100.0, T = 0.5, r = 0.08, v = 0.20;
+    int fCall = 1, ok;
+    double iv, S = 100.0, X = 100.0, T = 0.5, r = 0.08, v = 0.20;
 
-	double cm = blackscholes(fCall, S, X, T, r, v);
-	ok = NewtonRaphson(fCall, S, X, T, r, cm, &iv);
-	assert(ok);
-	assert_equal(v, iv);
+    double cm = blackscholes(fCall, S, X, T, r, v);
+    ok = NewtonRaphson(fCall, S, X, T, r, cm, &iv);
+    assert(ok);
+    assert_equal(v, iv);
 
-	fCall = 0;
-	cm = blackscholes(fCall, S, X, T, r, v);
-	ok = NewtonRaphson(fCall, S, X, T, r, cm, &iv);
-	assert(ok);
-	assert_equal(v, iv);
+    fCall = 0;
+    cm = blackscholes(fCall, S, X, T, r, v);
+    ok = NewtonRaphson(fCall, S, X, T, r, cm, &iv);
+    assert(ok);
+    assert_equal(v, iv);
 }
 
 /* WTF??? Two functions? */
@@ -133,26 +133,26 @@ void check_NewtonRaphson(void)
 /* NewtonRhapson for imp. vol of european options */
 void check_NewtonRaphson_put(void)
 {
-	int fCall = 0, ok;
+    int fCall = 0, ok;
 
-	double S = 75.0, X = 70.0, T = 0.5, r = 0.10,  v = 0.35;
+    double S = 75.0, X = 70.0, T = 0.5, r = 0.10,  v = 0.35;
 
-	double computed, price = gbs(fCall, S, X, T, r, r, v);
-	ok = NewtonRaphson(fCall, S, X, T, r, price, &computed);
-	assert(ok);
-	assert_equal(computed, v);
+    double computed, price = gbs(fCall, S, X, T, r, r, v);
+    ok = NewtonRaphson(fCall, S, X, T, r, price, &computed);
+    assert(ok);
+    assert_equal(computed, v);
 
-	ok = NewtonRaphson_put(S, X, T, r, price, &computed);
-	assert(ok);
-	assert_equal(computed, v);
+    ok = NewtonRaphson_put(S, X, T, r, price, &computed);
+    assert(ok);
+    assert_equal(computed, v);
 }
 
 
 int main(void)
 {
-	check_NewtonRaphson();
-	check_NewtonRaphson_put();
-	return 0;
+    check_NewtonRaphson();
+    check_NewtonRaphson_put();
+    return 0;
 }
 #endif
 

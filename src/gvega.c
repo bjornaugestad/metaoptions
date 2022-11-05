@@ -25,37 +25,37 @@
 /* Vega for the generalized Black and Scholes formula */
 double vega(double S, double X, double T, double r, double b, double v) 
 {
-	double st, vst, d1, result;
+    double st, vst, d1, result;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
-	st = sqrt(T);
-	vst = v * st;
+    st = sqrt(T);
+    vst = v * st;
     d1 = (log(S / X) + (b + pow2(v) / 2.0) * T) / (vst);
     result = S * exp((b - r) * T) * normdist(d1) * st;
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef GVEGA_CHECK
 
 void check_vega(void)
 {
-	double S = 55.0, X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
+    double S = 55.0, X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
 
-	assert_equal(vega(S, X, T, r, b, v), 18.9358);
+    assert_equal(vega(S, X, T, r, b, v), 18.9358);
 }
 
 int main(void)
 {
-	check_vega();
-	return 0;
+    check_vega();
+    return 0;
 }
 #endif
 

@@ -25,9 +25,9 @@
 /* Executive stock options */
 double Executive(int fCall, double S, double X, double T, double r, double b, double v, double lambda) 
 {
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
 
     return exp(-lambda * T) * gbs(fCall, S, X, T, r, b, v);
 }
@@ -35,24 +35,24 @@ double Executive(int fCall, double S, double X, double T, double r, double b, do
 
 extern double Executive_call(double S, double X, double T, double r, double b, double v, double lambda) 
 {
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
     return exp(-lambda * T) * gbs_call(S, X, T, r, b, v);
 }
 
 extern double Executive_put(double S, double X, double T, double r, double b, double v, double lambda) 
 {
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
     return exp(-lambda * T) * gbs_put(S, X, T, r, b, v);
 }
@@ -61,20 +61,20 @@ extern double Executive_put(double S, double X, double T, double r, double b, do
 #ifdef EXECUTIVE_CHECK
 void check_Executive(void)
 {
-	double S = 60.0, X = 64.0, T = 2, r = 0.07, b = r - 0.03, v = 0.38, lambda = 0.15;
-	double result, fasit = 9.1244;
+    double S = 60.0, X = 64.0, T = 2, r = 0.07, b = r - 0.03, v = 0.38, lambda = 0.15;
+    double result, fasit = 9.1244;
 
-	result = Executive(1, S, X, T, r, b, v, lambda);
-	assert_equal(result, fasit);
-	assert_equal(result, Executive_call(S, X, T, r, b, v, lambda));
+    result = Executive(1, S, X, T, r, b, v, lambda);
+    assert_equal(result, fasit);
+    assert_equal(result, Executive_call(S, X, T, r, b, v, lambda));
 }
 
 
 int main(void)
 {
-	check_Executive();
-	printf("Mangler data for puts\n");
-	return 0;
+    check_Executive();
+    printf("Mangler data for puts\n");
+    return 0;
 }
 #endif
 

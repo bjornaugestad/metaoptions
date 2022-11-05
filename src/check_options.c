@@ -26,10 +26,10 @@
 
 int main(void)
 {
-	/* Inlined tests */
-	assert_equal(normdist(0.0837), 0.3975);
+    /* Inlined tests */
+    assert_equal(normdist(0.0837), 0.3975);
 
-	return 0;
+    return 0;
 }
 
 

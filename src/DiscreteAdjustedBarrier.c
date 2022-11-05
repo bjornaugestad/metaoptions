@@ -26,28 +26,28 @@
 /* Discrete barrier monitoring adjustment */
 double DiscreteAdjustedBarrier(double S, double H, double v, double dt) 
 {
-	double result;
+    double result;
 
     if (H > S) 
         result = H * exp(0.5826 * v * sqrt(dt));
-	else if(H < S)
+    else if(H < S)
         result = H * exp(-0.5826 * v * sqrt(dt));
-	else
-		abort();
+    else
+        abort();
 
-	return result;
+    return result;
 }
 
 #ifdef DISCRETEADJUSTEDBARRIER_CHECK
 void check_DiscreteAdjustedBarrier(void)
 {
-	printf("	%s(): Not implemented as I have no testdata.\n", __func__);
+    printf("	%s(): Not implemented as I have no testdata.\n", __func__);
 }
 
 int main(void)
 {
-	check_DiscreteAdjustedBarrier();
-	return 77;
+    check_DiscreteAdjustedBarrier();
+    return 77;
 }
 #endif
 

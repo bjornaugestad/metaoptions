@@ -27,32 +27,32 @@
 
 /* Options on the maximum or minimum of two risky assets */
 double OptionsOnTheMaxMin(
-	const char* TypeFlag,
-	double S1,
-	double S2,
-	double X,
-	double T,
-	double r,
-	double b1,
-	double b2,
-	double v1,
-	double v2,
-	double Rho) 
+    const char* TypeFlag,
+    double S1,
+    double S2,
+    double X,
+    double T,
+    double r,
+    double b1,
+    double b2,
+    double v1,
+    double v2,
+    double Rho) 
 {
-	double sT, v, rho1, rho2, d, _y1, y2, result;
+    double sT, v, rho1, rho2, d, _y1, y2, result;
 
-	assert_valid_price(S1);
-	assert_valid_price(S2);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b1);
-	assert_valid_cost_of_carry(b2);
-	assert_valid_volatility(v1);
-	assert_valid_volatility(v2);
+    assert_valid_price(S1);
+    assert_valid_price(S2);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b1);
+    assert_valid_cost_of_carry(b2);
+    assert_valid_volatility(v1);
+    assert_valid_volatility(v2);
 
 
-	sT = sqrt(T);
+    sT = sqrt(T);
     v = sqrt(pow2(v1) + pow2(v2) - 2.0 * Rho * v1 * v2);
     rho1 = (v1 - Rho * v2) / v;
     rho2 = (v2 - Rho * v1) / v;
@@ -62,45 +62,45 @@ double OptionsOnTheMaxMin(
   
     if (!strcmp(TypeFlag, "cmin")) {
         result 
-			= S1 * exp((b1 - r) * T) * cbnd(_y1, -d, -rho1) 
-			+ S2 * exp((b2 - r) * T) * cbnd(y2, d - v * sT, -rho2) 
-			- X  * exp(-r * T)       * cbnd(_y1 - v1 * sT, y2 - v2 * sT, Rho);
+            = S1 * exp((b1 - r) * T) * cbnd(_y1, -d, -rho1) 
+            + S2 * exp((b2 - r) * T) * cbnd(y2, d - v * sT, -rho2) 
+            - X  * exp(-r * T)       * cbnd(_y1 - v1 * sT, y2 - v2 * sT, Rho);
     }
-	else if( !strcmp(TypeFlag, "cmax")) {
+    else if( !strcmp(TypeFlag, "cmax")) {
         result 
-			= S1 * exp((b1 - r) * T) * cbnd(_y1, d, rho1) 
-			+ S2 * exp((b2 - r) * T) * cbnd(y2, -d + v * sT, rho2) 
-			- X  * exp(-r * T)       * (1.0 - cbnd(-_y1 + v1 * sT, -y2 + v2 * sT, Rho));
+            = S1 * exp((b1 - r) * T) * cbnd(_y1, d, rho1) 
+            + S2 * exp((b2 - r) * T) * cbnd(y2, -d + v * sT, rho2) 
+            - X  * exp(-r * T)       * (1.0 - cbnd(-_y1 + v1 * sT, -y2 + v2 * sT, Rho));
     }
-	else if( !strcmp(TypeFlag, "pmin")) {
+    else if( !strcmp(TypeFlag, "pmin")) {
         result 
-			= X * exp(-r * T) - S1 * exp((b1 - r) * T) 
-			+ EuropeanExchangeOption(S1, S2, 1.0, 1.0, T, r, b1, b2, v1, v2, Rho) 
-			+ OptionsOnTheMaxMin("cmin", S1, S2, X, T, r, b1, b2, v1, v2, Rho);
+            = X * exp(-r * T) - S1 * exp((b1 - r) * T) 
+            + EuropeanExchangeOption(S1, S2, 1.0, 1.0, T, r, b1, b2, v1, v2, Rho) 
+            + OptionsOnTheMaxMin("cmin", S1, S2, X, T, r, b1, b2, v1, v2, Rho);
     }
-	else if( !strcmp(TypeFlag, "pmax" )){
+    else if( !strcmp(TypeFlag, "pmax" )){
         result 
-			= X * exp(-r * T) - S2 * exp((b2 - r) * T) 
-			- EuropeanExchangeOption(S1, S2, 1.0, 1.0, T, r, b1, b2, v1, v2, Rho) 
-			+ OptionsOnTheMaxMin("cmax", S1, S2, X, T, r, b1, b2, v1, v2, Rho);
+            = X * exp(-r * T) - S2 * exp((b2 - r) * T) 
+            - EuropeanExchangeOption(S1, S2, 1.0, 1.0, T, r, b1, b2, v1, v2, Rho) 
+            + OptionsOnTheMaxMin("cmax", S1, S2, X, T, r, b1, b2, v1, v2, Rho);
     }
-	else
-		abort();
+    else
+        abort();
 
-	assert(is_sane(result));
-	return result;
+    assert(is_sane(result));
+    return result;
 }
 
 #ifdef OPTIONSONTHEMAXMIN_CHECK
 void check_OptionsOnTheMaxMin(void)
 {
-	printf("%s(): Not implemented\n", __func__);
+    printf("%s(): Not implemented\n", __func__);
 }
 
 int main(void)
 {
-	check_OptionsOnTheMaxMin();
-	return 77;
+    check_OptionsOnTheMaxMin();
+    return 77;
 }
 #endif
 

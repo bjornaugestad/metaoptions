@@ -25,57 +25,57 @@
 extern double BSbisection(int fCall, double S, double X, double T, double r, double b, double price)
 {
 
-	double vLow = VOLATILITY_MIN;
-	double vHigh = VOLATILITY_MAX, cLow, cHigh;
+    double vLow = VOLATILITY_MIN;
+    double vHigh = VOLATILITY_MAX, cLow, cHigh;
 
-	double val, diff, vi = 0.0;
-	for(;;) {
+    double val, diff, vi = 0.0;
+    for(;;) {
 
-		cLow = BSAmericanApprox(fCall, S, X, T, r, b, vLow);
-		cHigh = BSAmericanApprox(fCall, S, X, T, r, b, vHigh);
-		if(price < cLow)
-			return 0.0; 
-		else if(price > cHigh)
-			return VOLATILITY_MAX;
+        cLow = BSAmericanApprox(fCall, S, X, T, r, b, vLow);
+        cHigh = BSAmericanApprox(fCall, S, X, T, r, b, vHigh);
+        if(price < cLow)
+            return 0.0; 
+        else if(price > cHigh)
+            return VOLATILITY_MAX;
 
-		vi = vLow + (price - cLow) * (vHigh - vLow) / (cHigh - cLow);
-		if(vi < VOLATILITY_MIN)
-			vi = VOLATILITY_MIN;
-		else if(vi > VOLATILITY_MAX)	
-			vi = VOLATILITY_MAX;
+        vi = vLow + (price - cLow) * (vHigh - vLow) / (cHigh - cLow);
+        if(vi < VOLATILITY_MIN)
+            vi = VOLATILITY_MIN;
+        else if(vi > VOLATILITY_MAX)	
+            vi = VOLATILITY_MAX;
 
-		assert_valid_volatility(vi);
-		val = BSAmericanApprox(fCall, S, X, T, r, b, vi);
-		diff = price - val;
-		if(fabs(diff) <= epsilon)
-			break;
-		else if(val < price)
-			vLow = vi;
-		else
-			vHigh = vi;
-	}
+        assert_valid_volatility(vi);
+        val = BSAmericanApprox(fCall, S, X, T, r, b, vi);
+        diff = price - val;
+        if(fabs(diff) <= epsilon)
+            break;
+        else if(val < price)
+            vLow = vi;
+        else
+            vHigh = vi;
+    }
 
-	return vi;
+    return vi;
 }
 
 #ifdef BSBISECTION_CHECK
 
 void check_bsbisection(void)
 {
-	double price, computed, facit = 0.35;
-	int fCall = 0;
+    double price, computed, facit = 0.35;
+    int fCall = 0;
 
-	double S = 75.0, X = 70.0, T = 0.5, r = 0.10, b = 0.05;
+    double S = 75.0, X = 70.0, T = 0.5, r = 0.10, b = 0.05;
 
-	price = gbs(fCall, S, X, T, r, b, facit);
-	computed = BSbisection(fCall, S, X, T, r, b, price);
-	assert_equal(computed, facit);
+    price = gbs(fCall, S, X, T, r, b, facit);
+    computed = BSbisection(fCall, S, X, T, r, b, price);
+    assert_equal(computed, facit);
 }
 
 int main(void)
 {
-	check_bsbisection();
-	return 77;
+    check_bsbisection();
+    return 77;
 }
 
 #endif

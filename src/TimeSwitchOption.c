@@ -26,43 +26,43 @@
 
 /* Time switch options (discrete) */
 double TimeSwitchOption(
-	int fCall,
-	double S,
-	double X,
-	double a,
-	double T,
-	int m ,
-	double dt,
-	double r,
-	double b,
-	double v) 
+    int fCall,
+    double S,
+    double X,
+    double a,
+    double T,
+    int m ,
+    double dt,
+    double r,
+    double b,
+    double v) 
 {
     int i, Z, n;
-	double logSX, vv, erT, sum;
+    double logSX, vv, erT, sum;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_cost_of_carry(b);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_cost_of_carry(b);
+    assert_valid_volatility(v);
 
     if (fCall) 
         Z = 1;
-	else
+    else
         Z = -1;
 
-	{ /* Workaround for compiler 'bug' on x86 */
-		double tmp = T / dt;
-		n = (int)tmp;
-	}
+    { /* Workaround for compiler 'bug' on x86 */
+        double tmp = T / dt;
+        n = (int)tmp;
+    }
 
-	logSX = log(S/X);
-	vv = v*v;
-	erT = exp(-r * T);
+    logSX = log(S/X);
+    vv = v*v;
+    erT = exp(-r * T);
 
     sum = 0;
-	for(i = 1; i <= n; i++) {
+    for(i = 1; i <= n; i++) {
         double d = (logSX + (b - vv / 2.0) * i * dt) / (v * sqrt(i * dt));
         sum += cnd(Z * d) * dt;
     }
@@ -75,19 +75,19 @@ double TimeSwitchOption(
 /* page 37-39 */
 void check_TimeSwitchOption(void)
 {
-	double S = 100.0, A = 5.0, X = 110.0, T = 1.0, dt = 1.0/365.0, r = 0.06, b = r, v = 0.26;
-	int m = 0;
-	double result, fasit = 1.3750;
-	fprintf(stderr, "dt:%.20f 1.0/(1.0/365.0):%d\n", dt, (int)(1.0 / (1.0/365.0)));
-	result = TimeSwitchOption(1, S, X, A, T, m, dt, r, b, v);
-	assert_equal(result, fasit);
+    double S = 100.0, A = 5.0, X = 110.0, T = 1.0, dt = 1.0/365.0, r = 0.06, b = r, v = 0.26;
+    int m = 0;
+    double result, fasit = 1.3750;
+    fprintf(stderr, "dt:%.20f 1.0/(1.0/365.0):%d\n", dt, (int)(1.0 / (1.0/365.0)));
+    result = TimeSwitchOption(1, S, X, A, T, m, dt, r, b, v);
+    assert_equal(result, fasit);
 }
 
 
 int main(void)
 {
-	check_TimeSwitchOption();
-	return 0;
+    check_TimeSwitchOption();
+    return 0;
 }
 #endif
 

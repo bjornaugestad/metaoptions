@@ -29,18 +29,18 @@
 /* Black and Scholes (1973) Stock options */
 double blackscholes(int fCall, double S, double X, double T, double r, double v) 
 {
-	double vst, d1, d2;
+    double vst, d1, d2;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
-	assert(r >= 0.0);			/* Interest rate >= 0.0 */
-	assert(v > 0.0 && v <= 100.0);	/* Volatility between 0 and 100 */
+    assert(r >= 0.0);			/* Interest rate >= 0.0 */
+    assert(v > 0.0 && v <= 100.0);	/* Volatility between 0 and 100 */
     
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(S / X) + (r + pow2(v) / 2.0) * T) / (vst);
     d2 = d1 - vst;
     if(fCall) 
@@ -51,54 +51,54 @@ double blackscholes(int fCall, double S, double X, double T, double r, double v)
 
 extern double blackscholes_put(double S, double X, double T, double r, double v) 
 {
-	double vst, d1;
+    double vst, d1;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(S / X) + (r + pow2(v) / 2) * T) / (vst);
-	return X * exp(-r * T) * cnd(-(d1 - vst)) - S * cnd(-d1);
+    return X * exp(-r * T) * cnd(-(d1 - vst)) - S * cnd(-d1);
 }
 
 extern double blackscholes_call(double S, double X, double T, double r, double v) 
 {
-	double vst, d1;
+    double vst, d1;
 
-	assert_valid_price(S);
-	assert_valid_strike(X);
-	assert_valid_time(T);
-	assert_valid_interest_rate(r);
-	assert_valid_volatility(v);
+    assert_valid_price(S);
+    assert_valid_strike(X);
+    assert_valid_time(T);
+    assert_valid_interest_rate(r);
+    assert_valid_volatility(v);
 
-	vst = v * sqrt(T);
+    vst = v * sqrt(T);
     d1 = (log(S / X) + (r + pow2(v) / 2) * T) / (vst);
 
-	return S * cnd(d1) - X * exp(-r * T) * cnd((d1 - vst));
+    return S * cnd(d1) - X * exp(-r * T) * cnd((d1 - vst));
 }
 
 #ifdef BLACKSCHOLES_CHECK
 
 void check_blackscholes(void)
 {
-	double S = 60.0, X = 65.0, T = 0.25, r = 0.08, v = 0.30;
+    double S = 60.0, X = 65.0, T = 0.25, r = 0.08, v = 0.30;
 
-	assert_equal(blackscholes(1, S, X, T, r, v), 2.1334);
-	assert_equal(blackscholes_call(S, X, T, r, v), 2.1334);
+    assert_equal(blackscholes(1, S, X, T, r, v), 2.1334);
+    assert_equal(blackscholes_call(S, X, T, r, v), 2.1334);
 
-	S = 96.1469; X = 90.0; T = 0.75; r = 0.10; v = 0.25;
-	assert_equal(blackscholes(1, S, X, T, r, v), 15.6465);
-	assert_equal(blackscholes_call(S, X, T, r, v), 15.6465);
+    S = 96.1469; X = 90.0; T = 0.75; r = 0.10; v = 0.25;
+    assert_equal(blackscholes(1, S, X, T, r, v), 15.6465);
+    assert_equal(blackscholes_call(S, X, T, r, v), 15.6465);
 }
 
 
 int main(void)
 {
-	check_blackscholes();
-	return 0;
+    check_blackscholes();
+    return 0;
 }
 #endif
 
