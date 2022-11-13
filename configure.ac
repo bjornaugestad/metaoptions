@@ -1,6 +1,6 @@
 AC_INIT(metaoptions, 0.0.4, bjorn.augestad@gmail.com)
 AC_CONFIG_AUX_DIR([extras])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([subdir-objects])
 AC_CONFIG_SRCDIR([src/cbnd.c])
 
 # Checks for programs.
