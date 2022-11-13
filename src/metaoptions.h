@@ -121,7 +121,7 @@ static inline double normdist(double x) { return one_div_sqrt2pi * exp(-((x * x)
  * This is the main reason we use our own function.
  */
 #if 1
-#define is_sane(a) ((a) == (a)) /* if not, it is NaN on many systems. */
+#define is_sane(a) ((a) == (a) && !isnan(a)) /* if not, it is NaN on many systems. */
 #else
 /* Windows version */
 #include <float.h>

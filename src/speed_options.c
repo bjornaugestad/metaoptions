@@ -21,6 +21,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "metaoptions.h"
 
@@ -37,14 +38,14 @@ static double speed_miltersenschwartz(void);
 static double speed_SimpleChooser(void);
 static double speed_ExchangeExchangeOption(void);
 static double speed_gdelta(void);
-static double speed_gcarry(void);
+static double speed_carry(void);
 static double speed_PartialTimeTwoAssetBarrier(void);
-static double speed_gtheta(void);
-static double speed_ggamma(void);
-static double speed_grho(void);
-static double speed_gfrench(void);
+static double speed_theta(void);
+static double speed_gamma(void);
+static double speed_rho(void);
+static double speed_french(void);
 static double speed_gbs(void);
-static double speed_gvega(void);
+static double speed_vega(void);
 static double speed_TwoAssetBarrier(void);
 static double speed_AmericanExchangeOption(void);
 static double speed_black76(void);
@@ -99,7 +100,7 @@ int main(void)
 {
     long double sum = 0.0;
 
-    if(1) {
+    if(0) {
         /* Broken, crashes in cbnd() */
         // sum += speed_LookBarrier();
         sum += speed_ExtremeSpreadOption(); die_if_nan(sum);
@@ -111,11 +112,11 @@ int main(void)
         sum += speed_black76(); die_if_nan(sum);
         sum += speed_blackscholes(); die_if_nan(sum);
         sum += speed_gdelta(); die_if_nan(sum);
-        sum += speed_gcarry(); die_if_nan(sum);
-        sum += speed_gtheta(); die_if_nan(sum);
-        sum += speed_ggamma(); die_if_nan(sum);
-        sum += speed_gvega(); die_if_nan(sum);
-        sum += speed_grho(); die_if_nan(sum);
+        sum += speed_carry(); die_if_nan(sum);
+        sum += speed_theta(); die_if_nan(sum);
+        sum += speed_gamma(); die_if_nan(sum);
+        sum += speed_vega(); die_if_nan(sum);
+        sum += speed_rho(); die_if_nan(sum);
         sum += speed_PartialFloatLB(); die_if_nan(sum);
 
         sum += speed_TwoAssetBarrier(); die_if_nan(sum);
@@ -153,7 +154,7 @@ int main(void)
         sum += speed_OptionsOnOptions(); die_if_nan(sum);
         sum += speed_ComplexChooser(); die_if_nan(sum);
         sum += speed_JumpDiffusion(); die_if_nan(sum);
-        sum += speed_gfrench(); die_if_nan(sum);
+        sum += speed_french(); die_if_nan(sum);
         sum += speed_bisection(); die_if_nan(sum);
         sum += speed_GapOption(); die_if_nan(sum);
         sum += speed_ForwardStartOption(); die_if_nan(sum);
@@ -282,33 +283,33 @@ static double speed_gdelta(void)
     /* Check gbs_delta calls */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gdelta(1, 40 + i%20, X, T, r, b, v);
+        sum += delta(1, 40 + i%20, X, T, r, b, v);
     stop = clock();
     report("gdelta(call)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gdelta_call(40 + i%20, X, T, r, b, v);
+        sum += delta_call(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gdelta_call(inline version)", start, stop, niter);
+    report("delta_call(inline version)", start, stop, niter);
 
-    /* Check gdelta puts */
+    /* Check delta puts */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gdelta(0, 40 + i%20, X, T, r, b, v);
+        sum += delta(0, 40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gdelta(put)", start, stop, niter);
+    report("delta(put)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gdelta_put(40 + i%20, X, T, r, b, v);
+        sum += delta_put(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gdelta_put(inline version)", start, stop, niter);
+    report("delta_put(inline version)", start, stop, niter);
 
     return sum;
 }
 
-static double speed_gcarry(void)
+static double speed_carry(void)
 {
     size_t i, niter = 5*1000*1000;
     clock_t stop, start;
@@ -317,68 +318,68 @@ static double speed_gcarry(void)
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gcarry(0, 40 + i%20, X, T, r, b, v);
+        sum += carry(0, 40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gcarry(put)", start, stop, niter);
+    report("carry(put)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gcarry(1, 40 + i%20, X, T, r, b, v);
+        sum += carry(1, 40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gcarry(call)", start, stop, niter);
+    report("carry(call)", start, stop, niter);
     
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gcarry_put(40 + i%20, X, T, r, b, v);
+        sum += carry_put(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gcarry_put(inline version)", start, stop, niter);
+    report("carry_put(inline version)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gcarry_call(40 + i%20, X, T, r, b, v);
+        sum += carry_call(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gcarry_call(inline version)", start, stop, niter);
+    report("carry_call(inline version)", start, stop, niter);
     return sum;
 }
 
 
-static double speed_gtheta(void)
+static double speed_theta(void)
 {
     size_t i, niter = 2*1000*1000;
     clock_t stop, start;
     double sum = 0.0;
     double X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
 
-    /* Check gtheta call */
+    /* Check theta call */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gtheta(1, 40 + i%20, X, T, r, b, v);
+        sum += theta(1, 40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gtheta(call)", start, stop, niter);
+    report("theta(call)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gtheta_call(40 + i%20, X, T, r, b, v);
+        sum += theta_call(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gtheta_call(inline version)", start, stop, niter);
+    report("theta_call(inline version)", start, stop, niter);
 
-    /* Check gtheta put */
+    /* Check theta put */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gtheta(0, 40 + i%20, X, T, r, b, v);
+        sum += theta(0, 40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gtheta(put)", start, stop, niter);
+    report("theta(put)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gtheta_put(40 + i%20, X, T, r, b, v);
+        sum += theta_put(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("gtheta_put(inline version)", start, stop, niter);
+    report("theta_put(inline version)", start, stop, niter);
 
     return sum;
 }
 
-static double speed_ggamma(void)
+static double speed_gamma(void)
 {
     size_t i, niter = 5*1000*1000;
     clock_t stop, start;
@@ -387,42 +388,42 @@ static double speed_ggamma(void)
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += ggamma(40 + i%20, X, T, r, b, v);
+        sum += Gamma(40 + i%20, X, T, r, b, v);
     stop = clock();
-    report("ggamma", start, stop, niter);
+    report("Gamma", start, stop, niter);
     return sum;
 }
 
-static double speed_grho(void)
+static double speed_rho(void)
 {
     size_t i, niter = 3*1000*1000;
     clock_t stop, start;
     double sum = 0.0;
     double X = 60.0, T = 0.75, r = 0.10, b = 0.10, v = 0.30;
 
-    /* Check grho call */
+    /* Check rho call */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += grho(1, 40+i%20, X, T, r, b, v);
+        sum += rho(1, 40+i%20, X, T, r, b, v);
     stop = clock();
-    report("grho(call)", start, stop, niter);
+    report("rho(call)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += grho_call(40+i%20, X, T, r, b, v);
+        sum += rho_call(40+i%20, X, T, r, b, v);
     stop = clock();
     report("grho_call(inline version)", start, stop, niter);
 
-    /* Check grho put */
+    /* Check rho put */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += grho(0, 40+i%20, X, T, r, b, v);
+        sum += rho(0, 40+i%20, X, T, r, b, v);
     stop = clock();
-    report("grho(put)", start, stop, niter);
+    report("rho(put)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += grho_put(40+i%20, X, T, r, b, v);
+        sum += rho_put(40+i%20, X, T, r, b, v);
     stop = clock();
     report("grho_put(inline version)", start, stop, niter);
     return sum;
@@ -480,7 +481,7 @@ double speed_AmericanExchangeOption(void)
         for(iv2 = 0, v2 = 0.15; iv2 < 3; iv2++, v2 += 0.05) {
             for(iT = 0, T = 0.1; iT < 2; iT++, T += 0.4) {
                 for(irho = 0, rho = -0.5; irho < 3; irho++, rho += 0.5) {
-                    sum += AmericanExchangeOption(S1, S2, Q1, Q2, T, r, b1, b2, v1, v2, rho);
+                    sum += AmericanExchangeOption(1, S1, S2, Q1, Q2, T, r, b1, b2, v1, v2, rho);
                 }
             }
         }
@@ -491,9 +492,9 @@ double speed_AmericanExchangeOption(void)
     return sum;
 }
 
-static double speed_gvega(void)
+static double speed_vega(void)
 {
-    /* Check gvega */
+    /* Check vega */
     size_t i, niter = 5 * 1000*1000;
     clock_t stop, start;
     
@@ -502,9 +503,9 @@ static double speed_gvega(void)
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gvega(80 + i % 40, X, T, r, b, v);
+        sum += vega(80 + i % 40, X, T, r, b, v);
     stop = clock();
-    report("gvega", start, stop, niter);
+    report("vega", start, stop, niter);
     return sum;
 }
 
@@ -698,36 +699,36 @@ static double speed_JumpDiffusion(void)
 }
 
 
-static double speed_gfrench(void)
+static double speed_french(void)
 {
     double sum = 0.0, X = 60.0, T = 0.75, t1 = 0.5, r = 0.10, b = 0.10, v = 0.30;
 
-    /* Check gfrench call */
+    /* Check french call */
     size_t i, niter = 2*1000*1000;
     clock_t start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gfrench(1, 80 + i%40, X, T, t1, r, b, v);
+        sum += french(1, 80 + i%40, X, T, t1, r, b, v);
     clock_t stop = clock();
-    report("gfrench(call)", start, stop, niter);
+    report("french(call)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gfrench_call(80 + i%40, X, T, t1, r, b, v);
+        sum += french_call(80 + i%40, X, T, t1, r, b, v);
     stop = clock();
-    report("gfrench_call(inlined)", start, stop, niter);
+    report("french_call(inlined)", start, stop, niter);
 
-    /* Check gfrench put */
+    /* Check french put */
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gfrench(0, 80 + i%40, X, T, t1, r, b, v);
+        sum += french(0, 80 + i%40, X, T, t1, r, b, v);
     stop = clock();
-    report("gfrench(put)", start, stop, niter);
+    report("french(put)", start, stop, niter);
 
     start = clock();
     for(i = 0; i < niter; i++) 
-        sum += gfrench_put(80 + i%40, X, T, t1, r, b, v);
+        sum += french_put(80 + i%40, X, T, t1, r, b, v);
     stop = clock();
-    report("gfrench_put(inlined)", start, stop, niter);
+    report("french_put(inlined)", start, stop, niter);
     return sum;
 }
 
@@ -750,11 +751,12 @@ static double speed_ForwardStartOption(void)
 static double speed_bisection(void)
 {
     double sum = 0.0, S = 75.0, X = 70.0, T = 0.5, r = 0.10, b = 0.05;
+    double iv;
     size_t i, niter = 100*1000;
     clock_t start = clock();
 
     for(i = 0; i < niter; i++) 
-        sum += bisection(0, S, X, T, r, b, 4.086958);
+        sum += bisection(0, S, X, T, r, b, 4.086958, &iv);
 
     clock_t stop = clock();
     report("bisection", start, stop, niter);
@@ -887,10 +889,18 @@ static double speed_ExtremeSpreadOption(void)
     clock_t start = clock();
     for(n = 0; n < niter; n++) {
         for(i = 0; i < nelem; i++) {
+        #if 0
+            // See above comment about error in book. t1 cannot be 0.
+            // boa@20221113
             sum += ExtremeSpreadOption(values[i].type, S, values[i].SM, values[i].SM, 0.00, T2, r, b, values[i].v);
+            die_if_nan(sum);
+        #endif
             sum += ExtremeSpreadOption(values[i].type, S, values[i].SM, values[i].SM, 0.25, T2, r, b, values[i].v);
+            die_if_nan(sum);
             sum += ExtremeSpreadOption(values[i].type, S, values[i].SM, values[i].SM, 0.50, T2, r, b, values[i].v);
+            die_if_nan(sum);
             sum += ExtremeSpreadOption(values[i].type, S, values[i].SM, values[i].SM, 0.75, T2, r, b, values[i].v);
+            die_if_nan(sum);
         }
     }
     clock_t stop = clock();
@@ -917,10 +927,10 @@ static double speed_NewtonRaphson(void)
     clock_t start = clock();
     for(i = 0; i < niter; i++) {
         #if 1
-        iv = NewtonRaphson_call(values[i%20][0], X, T, r, values[i%20][1]);
+        iv = NewtonRaphson_call(values[i%20][0], X, T, r, values[i%20][1], &iv);
         sum += iv;
 
-        iv = NewtonRaphson_put(values[i%20][0], X, T, r, values[i%20][2]);
+        iv = NewtonRaphson_put(values[i%20][0], X, T, r, values[i%20][2], &iv);
         sum += iv;
         #else
         iv = NewtonRaphson(1, values[i%20][0], X, T, r, values[i%20][1]);

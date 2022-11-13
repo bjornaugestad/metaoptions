@@ -61,7 +61,7 @@ double ExtremeSpreadOption(
     assert_valid_cost_of_carry(b);
     assert_valid_volatility(v);
     assert(T > t1 && "We cannot have negative durations ");
-    assert(t1 > 0.0 && "If t1 == 0.0, then v * sqrt(t1) becomes 0.0 and later stuff becomes NaN");
+    assert(t1 != 0.0 && "If t1 == 0.0, then v * sqrt(t1) becomes 0.0 and later stuff becomes NaN");
 
     if (option_type == ESO_CALL || option_type == ESO_REVERSE_CALL) 
         eta = 1;

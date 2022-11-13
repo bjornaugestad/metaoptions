@@ -133,6 +133,7 @@ double cbnd(double a, double b, double Rho)
 #if 1
         /*assert(is_sane(sp2a));*/
         if(!is_sane(sp2a) || sp2a == 0.0) {
+            fprintf(stderr, "const double sp2a = sqrt(pow2(a) - (Rho * 2.0 * a * b) + pow2(b)) becomes zero\n");
             fprintf(stderr, "This shouldn't happen :-(\n");
             fprintf(stderr, "----------------------------\n");
             fprintf(stderr, "sp2a == %f\n", sp2a);
