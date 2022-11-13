@@ -28,15 +28,15 @@ TESTS=check_options\
 	ExchangeExchangeOption_check\
 	gbs_check\
 	quanto_check\
-	gtheta_check\
-	gdelta_check\
-	ggamma_check\
-	gvega_check\
-	gcarry_check\
-	grho_check\
+	theta_check\
+	delta_check\
+	gamma_check\
+	vega_check\
+	carry_check\
+	rho_check\
 	blackscholes_check\
 	black76_check\
-	gfrench_check\
+	french_check\
 	ExtendibleWriter_check\
 	MiltersenSchwartz_check\
 	PartialTimeTwoAssetBarrier_check\
@@ -106,14 +106,14 @@ libmetaoptions_a_SOURCES=\
 	src/ForwardStartOption.c\
 	src/GapOption.c\
 	src/gbs.c\
-	src/gcarry.c\
-	src/gdelta.c\
+	src/carry.c\
+	src/delta.c\
 	src/GeometricAverageRateOption.c\
-	src/gfrench.c\
-	src/ggamma.c\
-	src/grho.c\
-	src/gtheta.c\
-	src/gvega.c\
+	src/french.c\
+	src/gamma.c\
+	src/rho.c\
+	src/theta.c\
+	src/vega.c\
 	src/JumpDiffusion.c\
 	src/LevyAsian.c\
 	src/LookBarrier.c\
@@ -192,16 +192,16 @@ man_MANS=\
 	doc/gbs.3\
 	doc/gbs_call.3\
 	doc/gbs_put.3\
-	doc/gcarry.3\
-	doc/gdelta.3\
-	doc/gdelta_call.3\
-	doc/gdelta_put.3\
+	doc/carry.3\
+	doc/delta.3\
+	doc/delta_call.3\
+	doc/delta_put.3\
 	doc/GeometricAverageRateOption.3\
-	doc/gfrench.3\
-	doc/ggamma.3\
-	doc/grho.3\
-	doc/gtheta.3\
-	doc/gvega.3\
+	doc/french.3\
+	doc/gamma.3\
+	doc/rho.3\
+	doc/theta.3\
+	doc/vega.3\
 	doc/ImpliedTrinominalTree.3\
 	doc/JumpDiffusion.3\
 	doc/LevyAsian.3\
@@ -331,7 +331,7 @@ SuperShare_check_SOURCES=src/SuperShare.c src/cnd.c
 
 NewtonRaphson_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DNEWTONRAPHSON_CHECK
 NewtonRaphson_check_LDADD=-lm
-NewtonRaphson_check_SOURCES=src/NewtonRaphson.c src/gbs.c src/gvega.c src/blackscholes.c src/cnd.c
+NewtonRaphson_check_SOURCES=src/NewtonRaphson.c src/gbs.c src/vega.c src/blackscholes.c src/cnd.c
 
 bisection_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DBISECTION_CHECK
 bisection_check_LDADD=-lm
@@ -355,7 +355,7 @@ AssetOrNothing_check_SOURCES=src/AssetOrNothing.c src/cnd.c
 
 ComplexChooser_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DCOMPLEXCHOOSER_CHECK
 ComplexChooser_check_LDADD=-lm
-ComplexChooser_check_SOURCES=src/ComplexChooser.c src/cnd.c src/cbnd.c src/gbs.c src/gdelta.c
+ComplexChooser_check_SOURCES=src/ComplexChooser.c src/cnd.c src/cbnd.c src/gbs.c src/delta.c
 
 TimeSwitchOption_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DTIMESWITCHOPTION_CHECK
 TimeSwitchOption_check_LDADD=-lm
@@ -391,7 +391,7 @@ ForwardStartOption_check_SOURCES=src/ForwardStartOption.c src/gbs.c src/cnd.c
 
 OptionsOnOptions_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DOPTIONSONOPTIONS_CHECK
 OptionsOnOptions_check_LDADD=-lm
-OptionsOnOptions_check_SOURCES=src/OptionsOnOptions.c src/gbs.c src/gdelta.c src/cbnd.c src/cnd.c
+OptionsOnOptions_check_SOURCES=src/OptionsOnOptions.c src/gbs.c src/delta.c src/cbnd.c src/cnd.c
 
 GeometricAverageRateOption_check_CFLAGS=-Wshadow -ffast-math -O0 -std=c99 -W -Wall -pedantic -ggdb -DGEOMETRICAVERAGERATEOPTION_CHECK
 GeometricAverageRateOption_check_LDADD=-lm
@@ -405,9 +405,9 @@ BAWbisection_check_SOURCES=src/BAWbisection.c src/BAWAmericanApprox.c src/gbs.c 
 # BSbisection_check_LDADD=-lm
 # BSbisection_check_SOURCES=src/BSbisection.c src/BSAmericanApprox.c src/gbs.c src/cnd.c
 
-grho_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGRHO_CHECK
-grho_check_LDADD=-lm
-grho_check_SOURCES=src/grho.c src/cnd.c src/gbs.c
+rho_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGRHO_CHECK
+rho_check_LDADD=-lm
+rho_check_SOURCES=src/rho.c src/cnd.c src/gbs.c
 
 ForEquOptInDomCur_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DFOREQUOPTINDOMCUR_CHECK
 ForEquOptInDomCur_check_LDADD=-lm
@@ -453,17 +453,17 @@ gbs_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGBS_CHEC
 gbs_check_LDADD=-lm
 gbs_check_SOURCES=src/gbs.c src/cnd.c
 
-gtheta_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGTHETA_CHECK
-gtheta_check_LDADD=-lm
-gtheta_check_SOURCES=src/gtheta.c src/cnd.c
+theta_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGTHETA_CHECK
+theta_check_LDADD=-lm
+theta_check_SOURCES=src/theta.c src/cnd.c
 
-gdelta_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGDELTA_CHECK
-gdelta_check_LDADD=-lm
-gdelta_check_SOURCES=src/gdelta.c src/cnd.c
+delta_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGDELTA_CHECK
+delta_check_LDADD=-lm
+delta_check_SOURCES=src/delta.c src/cnd.c
 
-gcarry_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGCARRY_CHECK
-gcarry_check_LDADD=-lm
-gcarry_check_SOURCES=src/gcarry.c src/cnd.c
+carry_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGCARRY_CHECK
+carry_check_LDADD=-lm
+carry_check_SOURCES=src/carry.c src/cnd.c
 
 black76_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DBLACK76_CHECK
 black76_check_LDADD=-lm
@@ -473,17 +473,17 @@ blackscholes_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -
 blackscholes_check_LDADD=-lm
 blackscholes_check_SOURCES=src/blackscholes.c src/cnd.c
 
-ggamma_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGGAMMA_CHECK
-ggamma_check_LDADD=-lm
-ggamma_check_SOURCES=src/ggamma.c 
+gamma_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGGAMMA_CHECK
+gamma_check_LDADD=-lm
+gamma_check_SOURCES=src/gamma.c 
 
-gfrench_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGFRENCH_CHECK
-gfrench_check_LDADD=-lm
-gfrench_check_SOURCES=src/gfrench.c src/cnd.c
+french_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGFRENCH_CHECK
+french_check_LDADD=-lm
+french_check_SOURCES=src/french.c src/cnd.c
 
-gvega_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGVEGA_CHECK
-gvega_check_LDADD=-lm
-gvega_check_SOURCES=src/gvega.c 
+vega_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DGVEGA_CHECK
+vega_check_LDADD=-lm
+vega_check_SOURCES=src/vega.c 
 
 quanto_check_CFLAGS=-Wshadow $(FM) -O0 -std=c99 -W -Wall -pedantic -ggdb -DQUANTO_CHECK
 quanto_check_LDADD=-lm
