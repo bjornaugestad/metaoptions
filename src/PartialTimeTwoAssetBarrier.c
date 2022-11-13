@@ -55,7 +55,7 @@ double PartialTimeTwoAssetBarrier(
     assert(is_sane(b2));
     assert(is_sane(v1) && v1 != 0.0);	/* Cannot be 0 */
     assert(is_sane(v2) && v2 != 0.0);	/* Cannot be 0 */
-    assert(is_sane(Rho) && Rho != 0.0);
+    assert(is_sane(Rho));
 
     switch(typeflag) {
         case SB_CALL_DOWN_OUT:
