@@ -1,6 +1,6 @@
 /*
     libmetaoptions - A collection of option-related functions. 
-    Copyright (C) 2000-2004 B. Augestad, bjorn.augestad@gmail.com 
+    Copyright (C) 2000-2022 B. Augestad, bjorn.augestad@gmail.com 
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
